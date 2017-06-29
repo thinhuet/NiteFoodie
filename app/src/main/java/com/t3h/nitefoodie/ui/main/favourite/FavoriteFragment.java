@@ -11,8 +11,6 @@ import com.t3h.nitefoodie.ui.base.fragment.BaseMVPFragment;
  */
 
 public class FavoriteFragment extends BaseMVPFragment {
-    private Toolbar toolbar;
-
     @Override
     public int getLayoutMain() {
         return R.layout.favourite_fragment;
@@ -20,14 +18,11 @@ public class FavoriteFragment extends BaseMVPFragment {
 
     @Override
     public void findViewByIds() {
-        toolbar = (Toolbar) getView().findViewById(R.id.toolbar);
+
     }
 
     @Override
     public void initComponents() {
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.setSupportActionBar(toolbar);
-        activity.getSupportActionBar().setTitle("Ưa Thích");
     }
 
     @Override

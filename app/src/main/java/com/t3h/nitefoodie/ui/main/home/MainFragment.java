@@ -1,17 +1,14 @@
 package com.t3h.nitefoodie.ui.main.home;
 
-import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.t3h.nitefoodie.R;
-import com.t3h.nitefoodie.ui.base.fragment.BaseFragment;
 import com.t3h.nitefoodie.ui.base.fragment.BaseMVPFragment;
-import com.t3h.nitefoodie.ui.main.account.AccountFragment;
-import com.t3h.nitefoodie.ui.main.home.listshop.ListShopFragment;
+import com.t3h.nitefoodie.ui.main.home.listshop.ListStoreFragment;
 
 /**
  * Created by thinhquan on 6/24/17.
@@ -59,7 +56,7 @@ public class MainFragment extends BaseMVPFragment implements ViewPager.OnPageCha
 
     }
 
-    public class ViewPagerAdapter extends FragmentStatePagerAdapter {
+    public class ViewPagerAdapter extends FragmentPagerAdapter {
 
         public ViewPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -67,7 +64,7 @@ public class MainFragment extends BaseMVPFragment implements ViewPager.OnPageCha
 
         @Override
         public Fragment getItem(int position) {
-            return new ListShopFragment();
+            return new ListStoreFragment();
         }
 
         @Override
@@ -82,10 +79,10 @@ public class MainFragment extends BaseMVPFragment implements ViewPager.OnPageCha
                     return getContext().getString(R.string.hot_sale);
 
                 case 1:
-                    return getContext().getString(R.string.popular);
+                    return getContext().getString(R.string.all);
 
                 default:
-                    return getContext().getString(R.string.all);
+                    return getContext().getString(R.string.favourite);
 
             }
         }
