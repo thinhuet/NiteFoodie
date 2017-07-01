@@ -7,7 +7,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.Explode;
+import android.transition.Slide;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
@@ -23,10 +26,9 @@ import com.t3h.nitefoodie.ui.main.favourite.FavoriteFragment;
 import com.t3h.nitefoodie.ui.main.home.MainFragment;
 import com.t3h.nitefoodie.ui.main.notification.NotificationFragment;
 
-public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener, AHBottomNavigation.OnTabSelectedListener {
+public class MainActivity extends BaseActivity implements AHBottomNavigation.OnTabSelectedListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    //  private BottomNavigationView mBottomNav;
     private AHBottomNavigation mBottomNavigation;
 
     @Override
@@ -36,17 +38,20 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     @Override
     public void findViewByIds() {
-        //mBottomNav = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         mBottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_navigation);
     }
 
     @Override
     public void initComponents() {
 
+        Slide slideTransition = new Slide();
+        slideTransition.setSlideEdge(Gravity.LEFT);
+        slideTransition.setDuration(200);
+        getWindow().setReenterTransition(slideTransition);
+        getWindow().setExitTransition(slideTransition);
         initBottomNavigation();
 
 
-        // Utils.disableShiftMode(mBottomNav);
         FragmentManager manager = getSupportFragmentManager();
         BaseFragment.openFragment(manager, manager.beginTransaction(),
                 MainFragment.class, ScreenAnimation.OPEN_FULL, null, false, true);
@@ -71,7 +76,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         mBottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
         mBottomNavigation.setNotificationBackgroundColor(getResources().getColor(R.color.colorAccent));
         mBottomNavigation.setNotification("ABC", 1);
-        mBottomNavigation.setOnTabSelectedListener(this);
 
         //mBottomNavigation.setColored(true);
 
@@ -79,42 +83,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     @Override
     public void setEvents() {
-//        if (mBottomNav != null) {
-//            mBottomNav.setOnNavigationItemSelectedListener(this);
-//        }
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        //item.setChecked(true);
-        BaseFragment fragment = BaseFragment.getCurrentBaseFragment(getSupportFragmentManager());
-        //Log.d(TAG, fragment.getClass().getName() + "");
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        if (fragment != null) {
-            BaseFragment.hideFragment(manager, transaction, fragment.getClass(),
-                    ScreenAnimation.OPEN_FULL, false, false);
-        }
-
-        switch (item.getItemId()) {
-            case R.id.action_store:
-                BaseFragment.openFragment(manager, transaction,
-                        CartFragment.class, ScreenAnimation.OPEN_FULL, null, false, true);
-                break;
-            case R.id.action_notification:
-                BaseFragment.openFragment(manager, transaction,
-                        NotificationFragment.class, ScreenAnimation.OPEN_FULL, null, false, true);
-                break;
-            case R.id.action_home:
-                BaseFragment.openFragment(manager, transaction,
-                        MainFragment.class, ScreenAnimation.OPEN_FULL, null, false, true);
-                break;
-            case R.id.action_account:
-                BaseFragment.openFragment(manager, transaction, AccountFragment.class,
-                        ScreenAnimation.OPEN_FULL, null, false, true);
-                break;
-        }
-        return true;
+        mBottomNavigation.setOnTabSelectedListener(this);
     }
 
     @Override

@@ -40,7 +40,7 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void initComponents() {
         ivToolbar.setBackgroundResource(R.drawable.gongcha);
-        ivToolbar.setScaleType(ImageView.ScaleType.CENTER_CROP);
+      //  ivToolbar.setScaleType(ImageView.ScaleType.CENTER_CROP);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Tra sua Gongcha");
         getSupportActionBar().setSubtitle("Ly Thuong Kiet");
@@ -51,6 +51,7 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
         rcStoreMenu.setLayoutManager(linearLayoutManager);
         rcStoreMenu.setAdapter(mRecipeAdapter);
         rcStoreMenu.setFocusable(false);
+        rcStoreMenu.setNestedScrollingEnabled(false);
     }
 
     @Override

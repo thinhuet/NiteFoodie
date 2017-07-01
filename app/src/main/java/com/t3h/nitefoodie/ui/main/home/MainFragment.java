@@ -5,10 +5,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.transition.Explode;
 
 import com.t3h.nitefoodie.R;
 import com.t3h.nitefoodie.ui.base.fragment.BaseMVPFragment;
-import com.t3h.nitefoodie.ui.main.home.listshop.ListStoreFragment;
+import com.t3h.nitefoodie.ui.main.home.store.ListStoreFragment;
 
 /**
  * Created by thinhquan on 6/24/17.
@@ -31,6 +32,8 @@ public class MainFragment extends BaseMVPFragment implements ViewPager.OnPageCha
 
     @Override
     public void initComponents() {
+        Explode explode = new Explode();
+        getBaseActivity().getWindow().setExitTransition(explode);
         tabLayout.setupWithViewPager(vpMain);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         vpMain.setAdapter(adapter);

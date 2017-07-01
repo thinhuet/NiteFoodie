@@ -1,12 +1,19 @@
-package com.t3h.nitefoodie.ui.main.home.listshop;
+package com.t3h.nitefoodie.ui.main.home.store;
 
 
-import android.support.v7.widget.LinearLayoutCompat;
+import android.content.Intent;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Slide;
+import android.view.Gravity;
 import android.widget.Toast;
 
 import com.t3h.nitefoodie.R;
+import com.t3h.nitefoodie.ui.base.animation.ScreenAnimation;
+import com.t3h.nitefoodie.ui.base.fragment.BaseFragment;
 import com.t3h.nitefoodie.ui.base.fragment.BaseMVPFragment;
 
 /**
@@ -43,10 +50,5 @@ public class ListStoreFragment extends BaseMVPFragment implements StoreAdapter.I
     @Override
     public int getCount() {
         return 20;
-    }
-
-    @Override
-    public void onClick(int position) {
-        Toast.makeText(getContext(), "" + position, Toast.LENGTH_SHORT).show();
     }
 }

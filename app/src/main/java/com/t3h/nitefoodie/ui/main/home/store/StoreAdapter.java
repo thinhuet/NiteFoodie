@@ -1,5 +1,9 @@
-package com.t3h.nitefoodie.ui.main.home.listshop;
+package com.t3h.nitefoodie.ui.main.home.store;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,13 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.t3h.nitefoodie.R;
-import com.t3h.nitefoodie.ui.base.IGetPosition;
 
 /**
  * Created by thinhquan on 6/29/17.
  */
 
-public class StoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
+public class StoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private IStoreAdapter mInterf;
 
     public StoreAdapter(IStoreAdapter interf) {
@@ -25,7 +28,7 @@ public class StoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.store_item_layout, parent, false);
-        return new StoreViewHolder(view, this);
+        return new StoreViewHolder(view);
     }
 
     @Override
@@ -38,13 +41,6 @@ public class StoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return mInterf.getCount();
     }
 
-    @Override
-    public void onClick(View v) {
-        IGetPosition position = (IGetPosition) v.getTag();
-        int pos = position.getPosition();
-        mInterf.onClick(pos);
-    }
-
     static class StoreViewHolder extends RecyclerView.ViewHolder {
         ImageView ivStore;
         TextView tvStoreName;
@@ -52,7 +48,7 @@ public class StoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         TextView tvTag;
         TextView tvAddress;
 
-        public StoreViewHolder(View itemView, View.OnClickListener onClickListener) {
+        public StoreViewHolder(final View itemView) {
             super(itemView);
             ivOnlineState = (ImageView) itemView.findViewById(R.id.iv_online_state);
             ivStore = (ImageView) itemView.findViewById(R.id.iv_store);
@@ -60,23 +56,20 @@ public class StoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             tvStoreName = (TextView) itemView.findViewById(R.id.tv_store_name);
             tvTag = (TextView) itemView.findViewById(R.id.tv_tag);
 
-            itemView.setOnClickListener(onClickListener);
-
-            IGetPosition position = new IGetPosition() {
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public int getPosition() {
-                    return getAdapterPosition();
+                public void onClick(View v) {
+                    Context context = itemView.getContext();
+                    Intent intent = new Intent(context, StoreDetailActivity.class);
+                    context.startActivity(intent,
+                            ActivityOptionsCompat.makeSceneTransitionAnimation
+                                    ((Activity) context, ivStore, "shareStore").toBundle());
                 }
-            };
-
-            itemView.setTag(position);
+            });
         }
     }
 
     public interface IStoreAdapter {
         int getCount();
-
-        void onClick(int position);
-
     }
 }
