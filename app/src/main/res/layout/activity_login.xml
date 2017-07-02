@@ -61,22 +61,19 @@
             android:textColor="@color/white" />
     </android.support.design.widget.TextInputLayout>
 
-    <android.support.v7.widget.AppCompatButton
+    <com.facebook.login.widget.LoginButton
         android:id="@+id/btn_fb_login"
-        style="?attr/borderlessButtonStyle"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/layout_password"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/button_selector"
-        android:backgroundTint="@color/white"
         android:drawableLeft="@drawable/facebook_logo"
         android:elevation="5dp"
-        android:text="Facebook"
         android:textAllCaps="false"
-        android:textColor="@color/indigo_700"
+        android:textColor="@color/white"
         android:textSize="16sp" />
 
     <android.support.v7.widget.AppCompatButton
@@ -90,10 +87,10 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/button_selector"
         android:backgroundTint="@color/white"
+        android:drawableLeft="@drawable/google_logo"
         android:elevation="5dp"
         android:text="Google"
         android:textAllCaps="false"
         android:textColor="@color/colorPrimary"
-        android:textSize="16sp"
-        android:drawableLeft="@drawable/google_logo" />
+        android:textSize="16sp" />
 </RelativeLayout>
