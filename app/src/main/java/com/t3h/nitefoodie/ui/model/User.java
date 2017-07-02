@@ -6,4 +6,5 @@ package com.t3h.nitefoodie.ui.model;
 
 public class User {
     private String username;
+    private String password;
 }
