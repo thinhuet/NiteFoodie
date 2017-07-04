@@ -1,20 +1,20 @@
 package com.t3h.nitefoodie.ui.main.home.store;
 
 
-import android.content.Intent;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.transition.Slide;
-import android.view.Gravity;
-import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.t3h.nitefoodie.R;
-import com.t3h.nitefoodie.ui.base.animation.ScreenAnimation;
-import com.t3h.nitefoodie.ui.base.fragment.BaseFragment;
 import com.t3h.nitefoodie.ui.base.fragment.BaseMVPFragment;
+import com.t3h.nitefoodie.ui.model.Store;
+import com.t3h.nitefoodie.ui.model.StoreInstance;
+
+import java.util.List;
 
 /**
  * Created by thinhquan on 6/25/17.
@@ -23,6 +23,8 @@ import com.t3h.nitefoodie.ui.base.fragment.BaseMVPFragment;
 public class ListStoreFragment extends BaseMVPFragment implements StoreAdapter.IStoreAdapter {
     private RecyclerView rcStore;
     private StoreAdapter mStoreAdapter;
+    private DatabaseReference mData;
+    private List<StoreInstance> storeInstances;
 
     @Override
     public int getLayoutMain() {
@@ -36,7 +38,42 @@ public class ListStoreFragment extends BaseMVPFragment implements StoreAdapter.I
 
     @Override
     public void initComponents() {
+        mData = FirebaseDatabase.getInstance().getReference().child("Store");
         mStoreAdapter = new StoreAdapter(this);
+
+        mData.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Store store = dataSnapshot.getValue(Store.class);
+
+                StoreInstance.getInstance().setName(store.getName());
+                StoreInstance.getInstance().setAddress(store.getAddress());
+                StoreInstance.getInstance().setPhone(store.getPhone());
+
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rcStore.setLayoutManager(linearLayoutManager);
         rcStore.setAdapter(mStoreAdapter);
@@ -49,6 +86,6 @@ public class ListStoreFragment extends BaseMVPFragment implements StoreAdapter.I
 
     @Override
     public int getCount() {
-        return 20;
+        return 10;
     }
 }
