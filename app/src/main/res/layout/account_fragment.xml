@@ -18,16 +18,16 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
         android:background="@color/colorPrimary"
         android:orientation="vertical"
-        android:paddingTop="16dp">
+        android:padding="16dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_user_avatar"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_gravity="left"
             android:layout_marginLeft="24dp"
             android:scaleType="centerCrop"
@@ -43,7 +43,7 @@
             android:layout_marginTop="8dp"
             android:text="Thinh Quan"
             android:textColor="@color/white"
-            android:textSize="24sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
@@ -54,7 +54,7 @@
             android:layout_marginTop="4dp"
             android:text="Email@gmail.com"
             android:textColor="@color/white"
-            android:textSize="24sp" />
+            android:textSize="12sp" />
     </LinearLayout>
 
     <Button
