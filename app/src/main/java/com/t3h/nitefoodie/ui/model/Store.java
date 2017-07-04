@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Store {
     private String sId;
-    private String name;
+    public String name;
     private String address;
     private String phone;
     private String rate;
@@ -23,19 +23,25 @@ public class Store {
 
     }
 
-    public Store(String sId, String name, String address, String phone, String rate,
-                 double numberRating, String openTime, String closeTime, List<Food> menu, List<Order> listOrders) {
-        this.sId = sId;
+    public Store(String name, String address, String phone){
         this.name = name;
         this.address = address;
         this.phone = phone;
-        this.rate = rate;
-        this.numberRating = numberRating;
-        this.openTime = openTime;
-        this.closeTime = closeTime;
-        this.menu = menu;
-        this.listOrders = listOrders;
     }
+
+//    public Store(String sId, String name, String address, String phone, String rate,
+//                 double numberRating, String openTime, String closeTime, List<Food> menu, List<Order> listOrders) {
+//        this.sId = sId;
+//        this.name = name;
+//        this.address = address;
+//        this.phone = phone;
+//        this.rate = rate;
+//        this.numberRating = numberRating;
+//        this.openTime = openTime;
+//        this.closeTime = closeTime;
+//        this.menu = menu;
+//        this.listOrders = listOrders;
+//    }
 
     public String getsId() {
         return sId;

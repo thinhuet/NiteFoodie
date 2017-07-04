@@ -1,17 +1,10 @@
 package com.t3h.nitefoodie.ui.main;
 
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,9 +26,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.t3h.nitefoodie.R;
 import com.t3h.nitefoodie.ui.base.activity.BaseActivity;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
@@ -46,6 +36,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private CallbackManager mCallBackManager;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private boolean mIsSucces;
 
     @Override
     public int getLayoutMain() {
@@ -60,6 +51,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void initComponents() {
+        mIsSucces = false;
         Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Pacifico.ttf");
         tvTitle.setTypeface(typeface);
         mCallBackManager = CallbackManager.Factory.create();
@@ -72,12 +64,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     public void setEvents() {
         findViewById(R.id.btn_gg_login).setOnClickListener(this);
+        findViewById(R.id.btn_fb_login).setOnClickListener(this);
+
+    }
+
+    private void fbLogin(){
         btnFbLogin.registerCallback(mCallBackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Log.d(TAG, "facebook:onSuccess:" + loginResult);
                 handleFacebookAccessTokken(loginResult.getAccessToken());
                 Toast.makeText(LoginActivity.this, "onSuccess", Toast.LENGTH_SHORT).show();
+                mIsSucces = true;
             }
 
             @Override
@@ -135,14 +133,44 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+//        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+//        if (mAuthListener != null){
+//            mAuth.removeAuthStateListener(mAuthListener);
+//        }
+    }
+
+    @Override
     public void onBackPressed() {
         onBackMain();
     }
 
-    @Override
-    public void onClick(View v) {
+    private void loginSucces(){
         Intent intent = new Intent();
         intent.setClass(this, MainActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_fb_login:
+//                fbLogin();
+//                if (mIsSucces == true){
+//                    loginSucces();
+//                }
+                loginSucces();
+                break;
+
+            case R.id.btn_gg_login:
+
+                break;
+        }
     }
 }
