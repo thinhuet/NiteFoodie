@@ -80,6 +80,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     @Override
     public void onClick(View v) {
         mPresenter.loginFacebook(this, mCallBackManager);
+        checkLogin();
     }
 
     @Override

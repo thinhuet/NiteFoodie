@@ -34,7 +34,7 @@ import java.util.Arrays;
  * Created by thinhquan on 7/4/17.
  */
 
-public class LoginPresenter extends BasePresenter<ILogin.View> implements ILogin.Presenter {
+public class LoginPresenter extends BasePresenter<ILogin.View> implements ILogin.Presenter,Constants {
     private FirebaseAuth mAuth;
     private DatabaseReference mData;
 
@@ -90,6 +90,7 @@ public class LoginPresenter extends BasePresenter<ILogin.View> implements ILogin
                                         user.setUid(firebaseUser.getUid());
                                         user.setName(firebaseUser.getDisplayName());
                                         user.setEmail(firebaseUser.getEmail());
+                                        user.setPhotoUrl(firebaseUser.getPhotoUrl().toString());
                                         addUser(user);
                                     }
                                 }
@@ -99,8 +100,8 @@ public class LoginPresenter extends BasePresenter<ILogin.View> implements ILogin
 
                                 }
                             });
-                }else {
-                    mView.moveToMain();
+                } else {
+                    //mView.moveToMain();
                 }
             }
         });

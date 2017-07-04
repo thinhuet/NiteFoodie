@@ -8,8 +8,17 @@ public class User {
     private String uid;
     private String email;
     private String name;
+    private String photoUrl;
 
     public User() {
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 
     public void setUid(String uid) {
