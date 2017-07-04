@@ -1,28 +1,26 @@
 package com.t3h.nitefoodie.ui.main.home.store;
 
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.t3h.nitefoodie.R;
 import com.t3h.nitefoodie.ui.base.activity.BaseActivity;
-import com.t3h.nitefoodie.ui.base.fragment.BaseMVPFragment;
 
 /**
  * Created by thinhquan on 6/30/17.
  */
 
-public class StoreDetailActivity extends BaseActivity implements View.OnClickListener, RecipeAdapter.IRecipeAdapter {
+public class StoreDetailActivity extends BaseActivity implements View.OnClickListener, FoodAdapter.IRecipeAdapter {
     private Toolbar toolbar;
     private ImageView ivToolbar;
     private FloatingActionButton fabFavourite;
     private RecyclerView rcStoreMenu;
-    private RecipeAdapter mRecipeAdapter;
+    private FoodAdapter mFoodAdapter;
 
     @Override
     public int getLayoutMain() {
@@ -40,16 +38,16 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void initComponents() {
         ivToolbar.setBackgroundResource(R.drawable.gongcha);
-      //  ivToolbar.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        //  ivToolbar.setScaleType(ImageView.ScaleType.CENTER_CROP);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Tra sua Gongcha");
         getSupportActionBar().setSubtitle("Ly Thuong Kiet");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mRecipeAdapter = new RecipeAdapter(this);
+        mFoodAdapter = new FoodAdapter(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rcStoreMenu.setLayoutManager(linearLayoutManager);
-        rcStoreMenu.setAdapter(mRecipeAdapter);
+        rcStoreMenu.setAdapter(mFoodAdapter);
         rcStoreMenu.setFocusable(false);
         rcStoreMenu.setNestedScrollingEnabled(false);
     }
@@ -82,5 +80,16 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
     @Override
     public int getCount() {
         return 15;
+    }
+
+    @Override
+    public void onClick(int position) {
+        final FoodDetailDialog detailDialog = new FoodDetailDialog(this, new FoodDetailDialog.OnClickDialog() {
+            @Override
+            public void onOrderSubmitClick(int numberFood) {
+                Toast.makeText(StoreDetailActivity.this, "afdagdag"+numberFood, Toast.LENGTH_SHORT).show();
+            }
+        });
+        detailDialog.show();
     }
 }

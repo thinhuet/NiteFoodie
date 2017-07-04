@@ -58,7 +58,7 @@ public class MainActivity extends BaseActivity implements AHBottomNavigation.OnT
         mBottomNavigation.setDefaultBackgroundColor(getResources().getColor(R.color.colorPrimary));
         //     mBottonNavigation.setBehaviorTranslationEnabled(true);
         mBottomNavigation.setAccentColor(getResources().getColor(R.color.white));
-        mBottomNavigation.setInactiveColor(getResources().getColor(R.color.colorPrimaryDark));
+        mBottomNavigation.setInactiveColor(getResources().getColor(R.color.blue_grey_200));
         //     mBottonNavigation.setTranslucentNavigationEnabled(true);
         //  mBottonNavigation.setForceTint(true);
         mBottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);

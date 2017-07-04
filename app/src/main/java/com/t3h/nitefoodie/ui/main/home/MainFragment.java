@@ -9,6 +9,7 @@ import android.transition.Explode;
 
 import com.t3h.nitefoodie.R;
 import com.t3h.nitefoodie.ui.base.fragment.BaseMVPFragment;
+import com.t3h.nitefoodie.ui.main.home.store.ListHotSaleFragment;
 import com.t3h.nitefoodie.ui.main.home.store.ListStoreFragment;
 
 /**
@@ -67,6 +68,9 @@ public class MainFragment extends BaseMVPFragment implements ViewPager.OnPageCha
 
         @Override
         public Fragment getItem(int position) {
+            if (position == 0) {
+                return new ListHotSaleFragment();
+            }
             return new ListStoreFragment();
         }
 
