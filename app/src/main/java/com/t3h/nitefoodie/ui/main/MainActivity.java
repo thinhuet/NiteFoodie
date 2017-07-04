@@ -1,28 +1,19 @@
 package com.t3h.nitefoodie.ui.main;
 
-import android.graphics.Color;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.transition.Explode;
-import android.transition.Slide;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.MenuItem;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.t3h.nitefoodie.R;
-import com.t3h.nitefoodie.ui.Utils;
+import com.t3h.nitefoodie.common.Constants;
 import com.t3h.nitefoodie.ui.base.activity.BaseActivity;
 import com.t3h.nitefoodie.ui.base.animation.ScreenAnimation;
 import com.t3h.nitefoodie.ui.base.fragment.BaseFragment;
 import com.t3h.nitefoodie.ui.main.account.AccountFragment;
 import com.t3h.nitefoodie.ui.main.cart.CartFragment;
-import com.t3h.nitefoodie.ui.main.favourite.FavoriteFragment;
 import com.t3h.nitefoodie.ui.main.home.MainFragment;
 import com.t3h.nitefoodie.ui.main.notification.NotificationFragment;
 
@@ -30,6 +21,7 @@ public class MainActivity extends BaseActivity implements AHBottomNavigation.OnT
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private AHBottomNavigation mBottomNavigation;
+    private String idUser;
 
     @Override
     public int getLayoutMain() {
@@ -44,11 +36,8 @@ public class MainActivity extends BaseActivity implements AHBottomNavigation.OnT
     @Override
     public void initComponents() {
 
-        Slide slideTransition = new Slide();
-        slideTransition.setSlideEdge(Gravity.LEFT);
-        slideTransition.setDuration(200);
-        getWindow().setReenterTransition(slideTransition);
-        getWindow().setExitTransition(slideTransition);
+        Intent intent = getIntent();
+        idUser = intent.getStringExtra(Constants.ID_USER);
         initBottomNavigation();
 
 
@@ -111,8 +100,10 @@ public class MainActivity extends BaseActivity implements AHBottomNavigation.OnT
                         NotificationFragment.class, ScreenAnimation.OPEN_FULL, null, false, true);
                 break;
             case 3:
+                Bundle bundle = new Bundle();
+                bundle.putString(Constants.ID_USER, idUser);
                 BaseFragment.openFragment(manager, transaction, AccountFragment.class,
-                        ScreenAnimation.OPEN_FULL, null, false, true);
+                        ScreenAnimation.OPEN_FULL, bundle, false, true);
                 break;
         }
         return true;
