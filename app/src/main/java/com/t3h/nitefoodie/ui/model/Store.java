@@ -23,7 +23,14 @@ public class Store {
 
     }
 
-    public Store(String name, String address, String phone){
+    public Store( String name, String address, String phone){
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+    }
+
+    public Store(String sId, String name, String address, String phone){
+        this.sId = sId;
         this.name = name;
         this.address = address;
         this.phone = phone;

@@ -1,11 +1,15 @@
 package com.t3h.nitefoodie.ui.main.account;
 
+import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,19 +22,23 @@ import com.squareup.picasso.Picasso;
 import com.t3h.nitefoodie.R;
 import com.t3h.nitefoodie.common.Constants;
 import com.t3h.nitefoodie.model.User;
+import com.t3h.nitefoodie.ui.base.animation.ScreenAnimation;
+import com.t3h.nitefoodie.ui.base.fragment.BaseFragment;
 import com.t3h.nitefoodie.ui.base.fragment.BaseMVPFragment;
+import com.t3h.nitefoodie.ui.main.MainActivity;
 
 /**
  * Created by thinhquan on 6/25/17.
  */
 
-public class AccountFragment extends BaseMVPFragment {
+public class AccountFragment extends BaseMVPFragment implements View.OnClickListener {
     private Toolbar toolbar;
     private String idUser;
     private DatabaseReference mData;
     private ImageView ivUserAvatar;
     private TextView tvUserName;
     private TextView tvUserEmail;
+    private Button btnRegister;
 
     @Override
     public int getLayoutMain() {
@@ -43,6 +51,7 @@ public class AccountFragment extends BaseMVPFragment {
         ivUserAvatar = (ImageView) getView().findViewById(R.id.iv_user_avatar);
         tvUserName = (TextView) getView().findViewById(R.id.tv_user_name);
         tvUserEmail = (TextView) getView().findViewById(R.id.tv_user_email);
+        btnRegister = (Button) getView().findViewById(R.id.btn_register);
     }
 
     @Override
@@ -86,6 +95,8 @@ public class AccountFragment extends BaseMVPFragment {
                 onBackRoot();
             }
         });
+
+        btnRegister.setOnClickListener(this);
     }
 
     @Override
@@ -106,5 +117,25 @@ public class AccountFragment extends BaseMVPFragment {
 
     private void logOut() {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        MainActivity activity = (MainActivity)getActivity();
+
+        BaseFragment fragment = BaseFragment.getCurrentBaseFragment(activity.getSupportFragmentManager());
+        //Log.d(TAG, fragment.getClass().getName() + "");
+        FragmentManager manager = activity.getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        if (fragment != null) {
+            BaseFragment.hideFragment(manager, transaction, fragment.getClass(),
+                    ScreenAnimation.OPEN_FULL, false, false);
+        }
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.ID_USER, idUser);
+
+        BaseFragment.openFragment(manager, transaction,
+                RegisterFragment.class, ScreenAnimation.OPEN_FULL, bundle, false, true);
     }
 }

@@ -7,6 +7,7 @@ import android.widget.EditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.t3h.nitefoodie.R;
+import com.t3h.nitefoodie.common.Constants;
 import com.t3h.nitefoodie.ui.base.fragment.BaseMVPFragment;
 import com.t3h.nitefoodie.ui.model.Store;
 
@@ -20,6 +21,7 @@ public class RegisterFragment extends BaseMVPFragment implements View.OnClickLis
     private EditText edtName;
     private EditText edtAddress;
     private EditText edtPhone;
+    private String idUser;
 
     private Button btnRegister;
 
@@ -40,6 +42,7 @@ public class RegisterFragment extends BaseMVPFragment implements View.OnClickLis
     @Override
     public void initComponents() {
         mData = FirebaseDatabase.getInstance().getReference();
+        idUser = getArguments().getString(Constants.ID_USER);
     }
 
     @Override
@@ -53,7 +56,14 @@ public class RegisterFragment extends BaseMVPFragment implements View.OnClickLis
         String address = edtAddress.getText().toString();
         String phone = edtPhone.getText().toString();
 
-        Store store = new Store(name, address, phone);
-        mData.child("Store").setValue(store);
+        writeNewUser(name, address, phone);
     }
+
+    private void writeNewUser( String name, String address, String phone) {
+
+        Store store = new Store(name, address, phone);
+
+        mData.child("Store").child(idUser).setValue(store);
+    }
+
 }

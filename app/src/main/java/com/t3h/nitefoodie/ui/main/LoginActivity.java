@@ -63,7 +63,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void setEvents() {
-        findViewById(R.id.btn_gg_login).setOnClickListener(this);
+//        findViewById(R.id.btn_gg_login).setOnClickListener(this);
         findViewById(R.id.btn_fb_login).setOnClickListener(this);
 
     }
@@ -168,9 +168,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 loginSucces();
                 break;
 
-            case R.id.btn_gg_login:
-
-                break;
         }
     }
 }
