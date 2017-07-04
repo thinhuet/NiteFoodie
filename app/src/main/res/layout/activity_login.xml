@@ -7,7 +7,7 @@
     android:background="@drawable/food_bg"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context="com.t3h.nitefoodie.ui.main.LoginActivity">
+    tools:context="com.t3h.nitefoodie.ui.main.login.LoginActivity">
 
     <TextView
         android:id="@+id/tv_title"
@@ -19,78 +19,22 @@
         android:textSize="48sp"
         android:textStyle="bold" />
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/layout_username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_title">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/edt_username"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@color/colorPrimaryDark"
-            android:hint="Username"
-            android:paddingBottom="16dp"
-            android:paddingLeft="16dp"
-            android:paddingTop="16dp"
-            android:textColor="@color/white" />
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/layout_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/layout_username"
-        android:layout_marginTop="8dp">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/edt_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@color/colorPrimaryDark"
-            android:ellipsize="middle"
-            android:hint="Password"
-            android:paddingBottom="16dp"
-            android:paddingLeft="16dp"
-            android:paddingTop="16dp"
-            android:textColor="@color/white" />
-    </android.support.design.widget.TextInputLayout>
-
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/btn_fb_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/layout_password"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/button_selector"
-        android:drawableLeft="@drawable/facebook_logo"
-        android:elevation="5dp"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="16sp" />
-
     <android.support.v7.widget.AppCompatButton
-        android:id="@+id/btn_gg_login"
+        android:id="@+id/btn_fb_login"
         style="?attr/borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:layout_below="@+id/btn_fb_login"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/button_selector"
         android:backgroundTint="@color/white"
-        android:drawableLeft="@drawable/google_logo"
+        android:drawableLeft="@drawable/facebook_logo"
         android:elevation="5dp"
-        android:text="Google"
+        android:text="Login by Facebook"
         android:textAllCaps="false"
-        android:textColor="@color/colorPrimary"
-        android:textSize="16sp" />
+        android:textColor="@color/com_facebook_blue"
+        android:textSize="16sp"
+        android:visibility="invisible" />
 </RelativeLayout>
