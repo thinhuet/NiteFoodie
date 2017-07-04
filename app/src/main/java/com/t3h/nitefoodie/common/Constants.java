@@ -7,4 +7,6 @@ package com.t3h.nitefoodie.common;
 public interface Constants {
 
     boolean DEBUG = true;
+    String USERS = "Users";
+    String ID_USER = "idUser";
 }
