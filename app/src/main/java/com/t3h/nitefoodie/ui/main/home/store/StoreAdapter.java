@@ -19,36 +19,15 @@ import java.util.List;
 public class StoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
 
     private List<Store> mItemStores;
-//    private IStoreAdapter mAdapter;
-
-//    public StoreAdapter(Context context, IStoreAdapter mAdapter) {
-//        this.mInflater = LayoutInflater.from(context);
-//        this.mItemStores = new ArrayList<>();
-//        this.mAdapter = mAdapter;
-//    }
 
 
     public StoreAdapter(List<Store> mItemStores) {
         this.mItemStores = mItemStores;
     }
 
-//    public void add(Store store) {
-//        mItemStores.add(0, store);
-//        notifyDataSetChanged();
-//    }
-
-//    public Store get(int position) {
-//        return mItemStores.get(position);
-//    }
-
-//    public List<Store> getmItemStores() {
-//        return mItemStores;
-//    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        LayoutInflater inflater = LayoutInflater.from(parent.getContext();
-//        View view = inflater.inflate(R.layout.store_item_layout, parent, false);
         return new ViewHolderPost(LayoutInflater.from(parent.getContext()).inflate(R.layout.store_item_layout, parent, false));
     }
 
