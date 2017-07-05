@@ -1,7 +1,6 @@
 package com.t3h.nitefoodie.ui.main;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
@@ -59,7 +58,7 @@ public class MainActivity extends BaseActivity implements AHBottomNavigation.OnT
         mBottomNavigation.setDefaultBackgroundColor(getResources().getColor(R.color.colorPrimary));
         //     mBottonNavigation.setBehaviorTranslationEnabled(true);
         mBottomNavigation.setAccentColor(getResources().getColor(R.color.white));
-        mBottomNavigation.setInactiveColor(getResources().getColor(R.color.colorPrimaryDark));
+        mBottomNavigation.setInactiveColor(getResources().getColor(R.color.blue_grey_200));
         //     mBottonNavigation.setTranslucentNavigationEnabled(true);
         //  mBottonNavigation.setForceTint(true);
         mBottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
@@ -100,10 +99,10 @@ public class MainActivity extends BaseActivity implements AHBottomNavigation.OnT
                         NotificationFragment.class, ScreenAnimation.OPEN_FULL, null, false, true);
                 break;
             case 3:
-                Bundle bundle = new Bundle();
-                bundle.putString(Constants.ID_USER, idUser);
+//                Bundle bundle = new Bundle();
+//                bundle.putString(Constants.ID_USER, idUser);
                 BaseFragment.openFragment(manager, transaction, AccountFragment.class,
-                        ScreenAnimation.OPEN_FULL, bundle, false, true);
+                        ScreenAnimation.OPEN_FULL, null, false, true);
                 break;
         }
         return true;

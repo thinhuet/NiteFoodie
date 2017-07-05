@@ -80,7 +80,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     @Override
     public void onClick(View v) {
         mPresenter.loginFacebook(this, mCallBackManager);
-        checkLogin();
     }
 
     @Override
@@ -102,12 +101,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     public void moveToMain() {
         Intent intent = new Intent();
         intent.setClass(LoginActivity.this, MainActivity.class);
-        //intent.putExtra(ID_USER, mIdUser);
         startActivity(intent);
     }
 
     private void checkLogin() {
-        showProgress();
         mAuthListerner = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -120,17 +117,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                             if (dataSnapshot.getValue() != null) {
                                 User user = dataSnapshot.getValue(User.class);
                                 if (user != null) {
-                                    hideProgress();
                                     final Intent intent = new Intent();
                                     intent.setClass(LoginActivity.this, MainActivity.class);
-                                    intent.putExtra(ID_USER, mIdUser);
-                                    mHandler.postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            startActivity(intent);
-                                            finish();
-                                        }
-                                    }, 3000);
+//                                    mHandler.postDelayed(new Runnable() {
+//                                        @Override
+//                                        public void run() {
+//
+//                                        }
+//                                    }, 3000);
+                                    startActivity(intent);
+                                    finish();
 
                                 } else {
                                     showMessage("Khong lay duoc du lieu!");
@@ -144,7 +140,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                         }
                     });
                 } else {
-                    hideProgress();
                     showLoginLayout();
                 }
             }

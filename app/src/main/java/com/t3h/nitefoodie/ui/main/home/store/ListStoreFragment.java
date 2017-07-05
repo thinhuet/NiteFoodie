@@ -4,14 +4,12 @@ package com.t3h.nitefoodie.ui.main.home.store;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.t3h.nitefoodie.R;
 import com.t3h.nitefoodie.ui.base.fragment.BaseMVPFragment;
 import com.t3h.nitefoodie.ui.model.Store;
+import com.t3h.nitefoodie.ui.model.StoreInstance;
 
 import java.util.ArrayList;
 import java.util.List;

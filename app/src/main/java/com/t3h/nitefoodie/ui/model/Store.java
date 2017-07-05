@@ -20,7 +20,6 @@ public class Store {
     private List<Order> listOrders = new ArrayList<Order>();
 
     public Store(){
-
     }
 
     public Store( String name, String address, String phone){
