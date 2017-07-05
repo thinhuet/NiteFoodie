@@ -4,10 +4,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
-import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -36,9 +35,6 @@ import com.t3h.nitefoodie.ui.base.fragment.BaseMVPFragment;
 import com.t3h.nitefoodie.ui.main.MainActivity;
 import com.t3h.nitefoodie.ui.main.login.LoginActivity;
 
-/**
- * Created by thinhquan on 6/25/17.
- */
 
 public class AccountFragment extends BaseMVPFragment implements View.OnClickListener {
     private Toolbar toolbar;
