@@ -1,6 +1,7 @@
 package com.t3h.nitefoodie.ui.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -12,18 +13,36 @@ public class Order {
     private String storeId;
     private String userId;
     private String state;
-    private List<Food> foods = new ArrayList<Food>();
+    private List<String> foodIds = new ArrayList<>();
+    private Date orderTime;
 
-    public Order(){
+    public Order() {
 
     }
 
-    public Order(String id, String storeId, String userId, String state, List<Food> foods) {
+    public Order(String id, String storeId, String userId, String state, List<String> foodIds, Date orderTime) {
         this.id = id;
+        this.orderTime = orderTime;
         this.storeId = storeId;
         this.userId = userId;
         this.state = state;
-        this.foods = foods;
+        this.foodIds = foodIds;
+    }
+
+    public List<String> getFoodIds() {
+        return foodIds;
+    }
+
+    public void setFoodIds(List<String> foodIds) {
+        this.foodIds = foodIds;
+    }
+
+    public Date getOrderTime() {
+        return orderTime;
+    }
+
+    public void setOrderTime(Date orderTime) {
+        this.orderTime = orderTime;
     }
 
     public String getId() {
@@ -56,13 +75,5 @@ public class Order {
 
     public void setState(String state) {
         this.state = state;
-    }
-
-    public List<Food> getFoods() {
-        return foods;
-    }
-
-    public void setFoods(List<Food> foods) {
-        this.foods = foods;
     }
 }

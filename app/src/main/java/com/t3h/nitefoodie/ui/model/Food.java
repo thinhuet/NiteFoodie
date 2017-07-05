@@ -7,16 +7,26 @@ package com.t3h.nitefoodie.ui.model;
 public class Food {
     private String storeId;
     private String name;
-    private String orderId;
+    private String foodId;
+    private String price;
 
-    public Food(){
+    public Food() {
 
     }
 
-    public Food(String storeId, String name, String orderId) {
+    public Food(String storeId, String name, String foodId, String price) {
         this.storeId = storeId;
         this.name = name;
-        this.orderId = orderId;
+        this.foodId = foodId;
+        this.price = price;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 
     public String getStoreId() {
@@ -35,11 +45,11 @@ public class Food {
         this.name = name;
     }
 
-    public String getOrderId() {
-        return orderId;
+    public String getFoodId() {
+        return foodId;
     }
 
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
+    public void setFoodId(String foodId) {
+        this.foodId = foodId;
     }
 }

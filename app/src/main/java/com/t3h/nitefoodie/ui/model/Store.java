@@ -14,21 +14,21 @@ public class Store {
     private String phone;
     private String rate;
     private double numberRating;
-    private String openTime;
-    private String closeTime;
+    private int openTime;
+    private int closeTime;
     private List<Food> menu = new ArrayList<Food>();
-    private List<Order> listOrders = new ArrayList<Order>();
+    private List<String> listOrderIds = new ArrayList<String>();
 
-    public Store(){
+    public Store() {
     }
 
-    public Store( String name, String address, String phone){
+    public Store(String name, String address, String phone) {
         this.name = name;
         this.address = address;
         this.phone = phone;
     }
 
-    public Store(String sId, String name, String address, String phone){
+    public Store(String sId, String name, String address, String phone) {
         this.sId = sId;
         this.name = name;
         this.address = address;
@@ -97,19 +97,19 @@ public class Store {
         this.numberRating = numberRating;
     }
 
-    public String getOpenTime() {
+    public int getOpenTime() {
         return openTime;
     }
 
-    public void setOpenTime(String openTime) {
+    public void setOpenTime(int openTime) {
         this.openTime = openTime;
     }
 
-    public String getCloseTime() {
+    public int getCloseTime() {
         return closeTime;
     }
 
-    public void setCloseTime(String closeTime) {
+    public void setCloseTime(int closeTime) {
         this.closeTime = closeTime;
     }
 
@@ -121,11 +121,11 @@ public class Store {
         this.menu = menu;
     }
 
-    public List<Order> getListOrders() {
-        return listOrders;
+    public List<String> getListOrders() {
+        return listOrderIds;
     }
 
-    public void setListOrders(List<Order> listOrders) {
-        this.listOrders = listOrders;
+    public void setListOrders(List<String> listOrders) {
+        this.listOrderIds = listOrders;
     }
 }

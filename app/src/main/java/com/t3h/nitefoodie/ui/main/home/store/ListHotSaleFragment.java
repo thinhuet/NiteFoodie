@@ -41,4 +41,5 @@ public class ListHotSaleFragment extends BaseMVPFragment implements HotSaleAdapt
     public int getCount() {
         return 10;
     }
+
 }
