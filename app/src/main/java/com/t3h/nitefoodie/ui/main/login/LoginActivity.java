@@ -108,6 +108,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private void checkLogin() {
         mAuthListerner = new FirebaseAuth.AuthStateListener() {
             @Override
+
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                 if (firebaseUser != null) {
