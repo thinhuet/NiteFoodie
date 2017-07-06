@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.t3h.nitefoodie.R;
-import com.t3h.nitefoodie.ui.model.Food;
+import com.t3h.nitefoodie.model.Food;
 
 /**
  * Created by thinhquan on 7/4/17.

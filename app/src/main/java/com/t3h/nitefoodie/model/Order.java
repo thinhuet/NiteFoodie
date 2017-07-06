@@ -1,4 +1,4 @@
-package com.t3h.nitefoodie.ui.model;
+package com.t3h.nitefoodie.model;
 
 import java.util.ArrayList;
 import java.util.Date;

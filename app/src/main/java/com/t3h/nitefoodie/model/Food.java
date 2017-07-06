@@ -1,40 +1,40 @@
-package com.t3h.nitefoodie.ui.model;
+package com.t3h.nitefoodie.model;
 
 /**
  * Created by dungtx on 03/07/2017.
  */
 
 public class Food {
-    private String storeId;
     private String name;
     private String foodId;
-    private String price;
+    private long price;
+    private String photoUrl;
 
     public Food() {
 
     }
 
-    public Food(String storeId, String name, String foodId, String price) {
-        this.storeId = storeId;
+    public Food(String foodId, String name, long price) {
         this.name = name;
         this.foodId = foodId;
         this.price = price;
     }
 
-    public String getPrice() {
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
+
+    public long getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(long price) {
         this.price = price;
-    }
-
-    public String getStoreId() {
-        return storeId;
-    }
-
-    public void setStoreId(String storeId) {
-        this.storeId = storeId;
     }
 
     public String getName() {

@@ -1,7 +1,6 @@
-package com.t3h.nitefoodie.ui.model;
+package com.t3h.nitefoodie.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 /**
  * Created by dungtx on 03/07/2017.
@@ -12,21 +11,18 @@ public class Store {
     public String name;
     private String address;
     private String phone;
-    private String rate;
-    private double numberRating;
+    private double rate;
+    private int numberRating;
     private int openTime;
     private int closeTime;
-    private List<Food> menu = new ArrayList<Food>();
-    private List<String> listOrderIds = new ArrayList<String>();
+    private HashMap<String, Food> menu = new HashMap<>();
+    private HashMap<String, String> listOrderIds = new HashMap<>();
+    private String tag;
+    private String photoUrl;
 
     public Store() {
     }
 
-    public Store(String name, String address, String phone) {
-        this.name = name;
-        this.address = address;
-        this.phone = phone;
-    }
 
     public Store(String sId, String name, String address, String phone) {
         this.sId = sId;
@@ -35,19 +31,22 @@ public class Store {
         this.phone = phone;
     }
 
-//    public Store(String sId, String name, String address, String phone, String rate,
-//                 double numberRating, String openTime, String closeTime, List<Food> menu, List<Order> listOrders) {
-//        this.sId = sId;
-//        this.name = name;
-//        this.address = address;
-//        this.phone = phone;
-//        this.rate = rate;
-//        this.numberRating = numberRating;
-//        this.openTime = openTime;
-//        this.closeTime = closeTime;
-//        this.menu = menu;
-//        this.listOrders = listOrders;
-//    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
 
     public String getsId() {
         return sId;
@@ -81,19 +80,19 @@ public class Store {
         this.phone = phone;
     }
 
-    public String getRate() {
+    public double getRate() {
         return rate;
     }
 
-    public void setRate(String rate) {
+    public void setRate(double rate) {
         this.rate = rate;
     }
 
-    public double getNumberRating() {
+    public int getNumberRating() {
         return numberRating;
     }
 
-    public void setNumberRating(double numberRating) {
+    public void setNumberRating(int numberRating) {
         this.numberRating = numberRating;
     }
 
@@ -113,19 +112,19 @@ public class Store {
         this.closeTime = closeTime;
     }
 
-    public List<Food> getMenu() {
+    public HashMap<String, Food> getMenu() {
         return menu;
     }
 
-    public void setMenu(List<Food> menu) {
+    public void setMenu(HashMap<String, Food> menu) {
         this.menu = menu;
     }
 
-    public List<String> getListOrders() {
+    public HashMap<String, String> getListOrderIds() {
         return listOrderIds;
     }
 
-    public void setListOrders(List<String> listOrders) {
+    public void setListOrderIds(HashMap<String, String> listOrders) {
         this.listOrderIds = listOrders;
     }
 }
