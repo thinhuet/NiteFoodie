@@ -166,10 +166,8 @@ public class AccountFragment extends BaseMVPFragment implements View.OnClickList
             BaseFragment.hideFragment(manager, transaction, fragment.getClass(),
                     ScreenAnimation.OPEN_FULL, false, false);
         }
-        Bundle bundle = new Bundle();
-        bundle.putString(Constants.ID_USER, idUser);
 
         BaseFragment.openFragment(manager, transaction,
-                RegisterFragment.class, ScreenAnimation.OPEN_FULL, bundle, false, true);
+                RegisterFragment.class, ScreenAnimation.OPEN_FULL, null, true, true);
     }
 }

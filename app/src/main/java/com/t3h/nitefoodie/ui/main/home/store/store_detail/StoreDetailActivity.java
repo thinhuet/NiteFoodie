@@ -114,7 +114,8 @@ public class StoreDetailActivity extends BaseActivity implements IStoreDetail.Vi
 
     @Override
     public void onClick(int position) {
-        final FoodDetailDialog detailDialog = new FoodDetailDialog(this, new FoodDetailDialog.OnClickDialog() {
+        Food food = mFoods.get(position);
+        final FoodDetailDialog detailDialog = new FoodDetailDialog(this, food, new FoodDetailDialog.OnClickDialog() {
             @Override
             public void onOrderSubmitClick(int numberFood) {
                 Toast.makeText(StoreDetailActivity.this, "afdagdag" + numberFood, Toast.LENGTH_SHORT).show();

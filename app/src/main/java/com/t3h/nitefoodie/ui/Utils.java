@@ -2,6 +2,9 @@ package com.t3h.nitefoodie.ui;
 
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
+import android.widget.TimePicker;
+
+import com.t3h.nitefoodie.model.TimeStore;
 
 /**
  * Created by thinhquan on 6/29/17.
@@ -17,4 +20,30 @@ public class Utils {
         DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
         return px / ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
+
+    public static TimeStore convertIntToTime(int time) {
+        int hour = time / 60;
+        int minute = time - hour * 60;
+        return new TimeStore(hour, minute);
+    }
+
+    public static int convertTimeToInt(TimeStore timeStore) {
+        return timeStore.getHour() * 60 + timeStore.getMinute();
+    }
+
+    public static TimeStore getTimeInTimePicker(TimePicker timePicker) {
+        int hour = 0;
+        int min = 0;
+
+        int currentApiVersion = android.os.Build.VERSION.SDK_INT;
+        if (currentApiVersion > android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
+            hour = timePicker.getHour();
+            min = timePicker.getMinute();
+        } else {
+            hour = timePicker.getCurrentHour();
+            min = timePicker.getCurrentMinute();
+        }
+        return new TimeStore(hour, min);
+    }
+
 }

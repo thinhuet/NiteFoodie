@@ -18,10 +18,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -30,6 +32,8 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.t3h.nitefoodie.R;
 import com.t3h.nitefoodie.common.Constants;
+import com.t3h.nitefoodie.model.Store;
+import com.t3h.nitefoodie.ui.Utils;
 import com.t3h.nitefoodie.ui.base.fragment.BaseMVPFragment;
 
 import java.io.ByteArrayOutputStream;
@@ -41,13 +45,27 @@ import java.util.Calendar;
 
 public class RegisterFragment extends BaseMVPFragment implements Constants, View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
+    private static final String TAG = RegisterFragment.class.getSimpleName();
     private Toolbar toolbar;
     private DatabaseReference mData;
     private ImageView ivStore;
     private EditText edtName;
     private EditText edtAddress;
     private EditText edtPhone;
+    private EditText edtType;
+    private TimePicker openTimePicker;
+    private TimePicker closeTimePicker;
+
     private String idUser;
+
+    private String name;
+    private String address;
+    private String phone;
+    private int openTime;
+    private int closeTime;
+    private String tag;
+    private String photoUrl;
+    private Store store;
 
     private Button btnAddFood;
 
@@ -69,22 +87,35 @@ public class RegisterFragment extends BaseMVPFragment implements Constants, View
         edtName = (EditText) getView().findViewById(R.id.edt_name);
         edtAddress = (EditText) getView().findViewById(R.id.edt_address);
         edtPhone = (EditText) getView().findViewById(R.id.edt_phone);
+        edtType = (EditText) getView().findViewById(R.id.edt_tag);
+        openTimePicker = (TimePicker) getView().findViewById(R.id.time_picker_open);
+        closeTimePicker = (TimePicker) getView().findViewById(R.id.time_picker_close);
         btnAddFood = (Button) getView().findViewById(R.id.btn_add_food);
 
     }
 
     @Override
     public void initComponents() {
+        store = new Store();
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setTitle("My Store");
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mData = FirebaseDatabase.getInstance().getReference();
-        idUser = getArguments().getString(Constants.ID_USER);
+        idUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        openTimePicker.setIs24HourView(true);
+        closeTimePicker.setIs24HourView(true);
     }
 
     @Override
     public void setEvents() {
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackRoot();
+            }
+        });
         btnAddFood.setOnClickListener(this);
         ivStore.setOnClickListener(this);
 
@@ -101,7 +132,8 @@ public class RegisterFragment extends BaseMVPFragment implements Constants, View
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_done:
-                updateStore();
+                uploadStore();
+                onBackRoot();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -122,13 +154,6 @@ public class RegisterFragment extends BaseMVPFragment implements Constants, View
         }
     }
 
-    private void updateStore() {
-
-    }
-
-    private void writeNewUser(String name, String address, String phone) {
-
-    }
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
@@ -161,21 +186,40 @@ public class RegisterFragment extends BaseMVPFragment implements Constants, View
             if (requestCode == REQUEST_LOAD_GALLERY) {
                 Uri imgUri = data.getData();
                 Picasso.with(getContext()).load(imgUri).into(ivStore);
+                ivStore.setScaleType(ImageView.ScaleType.CENTER_CROP);
             }
 
             if (requestCode == REQUEST_LOAD_CAPTURE) {
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                 ivStore.setImageBitmap(bitmap);
+                ivStore.setScaleType(ImageView.ScaleType.CENTER_CROP);
             }
 
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void uploadImageToStorage() {
+    private void uploadStore() {
+        name = edtName.getText().toString();
+        address = edtAddress.getText().toString();
+        phone = edtPhone.getText().toString();
+        tag = edtType.getText().toString();
+
+
+        openTime = Utils.convertTimeToInt(Utils.getTimeInTimePicker(openTimePicker));
+        closeTime = Utils.convertTimeToInt(Utils.getTimeInTimePicker(closeTimePicker));
+        store.setName(name);
+        store.setAddress(address);
+        store.setPhone(phone);
+        store.setTag(tag);
+        store.setOpenTime(openTime);
+        store.setCloseTime(closeTime);
+        store.setRate(0);
+        store.setNumberRating(0);
+        store.setsId(idUser);
+
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
-
         ivStore.setDrawingCacheEnabled(true);
         ivStore.buildDrawingCache();
         Bitmap bitmap = ivStore.getDrawingCache();
@@ -196,8 +240,12 @@ public class RegisterFragment extends BaseMVPFragment implements Constants, View
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
-                Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                Log.d(RegisterFragment.class.getSimpleName(), downloadUrl.toString());
+                store.setPhotoUrl(String.valueOf(taskSnapshot.getDownloadUrl()));
+                Log.d(TAG, "_______________________________________" + taskSnapshot.getDownloadUrl().toString());
+                Log.d(TAG, "_______________________________________" + store.getPhotoUrl());
+                //photoUrl = downloadUrl.toString();
+                mData.child(STORES).child(idUser).setValue(store);
+
             }
         });
     }

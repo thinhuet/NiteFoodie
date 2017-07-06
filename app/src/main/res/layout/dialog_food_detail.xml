@@ -13,7 +13,7 @@
         <ImageView
             android:id="@+id/iv_food"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="250dp"
             android:scaleType="centerCrop"
             android:src="@drawable/gongcha" />
 
@@ -25,24 +25,24 @@
             android:paddingLeft="8dp"
             android:text="Tra sua ca phe"
             android:textColor="@color/colorAccent"
-            android:textSize="24sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tv_recipe_price"
+            android:id="@+id/tv_food_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_food_name"
             android:paddingLeft="8dp"
             android:text="30000d"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="12sp" />
 
         <LinearLayout
             android:id="@+id/ll_food"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_recipe_price"
+            android:layout_below="@+id/tv_food_price"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -63,7 +63,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:text="0"
-                android:textSize="24sp" />
+                android:textSize="16sp" />
 
             <ImageButton
                 android:id="@+id/ib_add_food"
@@ -76,20 +76,35 @@
                 android:src="@drawable/ic_add_blue_700_24dp" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_food_order"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/ll_order"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ll_food"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_below="@+id/ll_food"
             android:background="@drawable/button_selector"
-            android:backgroundTint="@color/colorPrimary"
-            android:padding="16dp"
-            android:text="Dat Hang"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="24sp" />
+            android:backgroundTint="@color/colorAccent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:padding="16dp"
+                android:text="Thêm vào giỏ hàng"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_total_price"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:padding="16dp"
+                android:text="60.000d"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
     </RelativeLayout>
 </android.support.v7.widget.CardView>
