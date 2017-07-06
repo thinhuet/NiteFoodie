@@ -9,8 +9,8 @@ import android.transition.Explode;
 
 import com.t3h.nitefoodie.R;
 import com.t3h.nitefoodie.ui.base.fragment.BaseMVPFragment;
-import com.t3h.nitefoodie.ui.main.home.store.ListHotSaleFragment;
-import com.t3h.nitefoodie.ui.main.home.store.ListStoreFragment;
+import com.t3h.nitefoodie.ui.main.home.store.list_store.ListHotSaleFragment;
+import com.t3h.nitefoodie.ui.main.home.store.list_store.ListStoreFragment;
 
 /**
  * Created by thinhquan on 6/24/17.

@@ -15,7 +15,7 @@
             android:value="true"/>
         <activity android:name=".ui.main.MainActivity">
         </activity>
-        <activity android:name=".ui.main.home.store.StoreDetailActivity"/>
+        <activity android:name=".ui.main.home.store.store_detail.StoreDetailActivity"/>
         <activity android:name=".ui.main.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

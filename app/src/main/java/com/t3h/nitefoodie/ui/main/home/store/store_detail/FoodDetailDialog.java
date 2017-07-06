@@ -1,4 +1,4 @@
-package com.t3h.nitefoodie.ui.main.home.store;
+package com.t3h.nitefoodie.ui.main.home.store.store_detail;
 
 import android.app.Dialog;
 import android.content.Context;

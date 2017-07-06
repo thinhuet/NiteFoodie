@@ -1,10 +1,11 @@
-package com.t3h.nitefoodie.ui.main.home.store;
+package com.t3h.nitefoodie.ui.main.home.store.list_store;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.t3h.nitefoodie.R;
 import com.t3h.nitefoodie.ui.base.fragment.BaseMVPFragment;
+import com.t3h.nitefoodie.ui.main.home.store.HotSaleAdapter;
 
 /**
  * Created by thinhquan on 7/5/17.

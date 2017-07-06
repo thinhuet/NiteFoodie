@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.t3h.nitefoodie.R;
+import com.t3h.nitefoodie.ui.main.home.store.store_detail.StoreDetailActivity;
 
 /**
  * Created by thinhquan on 7/5/17.

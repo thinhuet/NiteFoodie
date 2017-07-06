@@ -1,16 +1,20 @@
 package com.t3h.nitefoodie.ui;
 
-import android.support.design.internal.BottomNavigationItemView;
-import android.support.design.internal.BottomNavigationMenuView;
-import android.support.design.widget.BottomNavigationView;
-import android.util.Log;
-
-import java.lang.reflect.Field;
+import android.content.res.Resources;
+import android.util.DisplayMetrics;
 
 /**
  * Created by thinhquan on 6/29/17.
  */
 
 public class Utils {
+    public static float convertDpToPixel(float dp) {
+        DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
+        return dp * ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+    }
 
+    public static float convertPixelsToDp(float px) {
+        DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
+        return px / ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+    }
 }

@@ -1,4 +1,4 @@
-package com.t3h.nitefoodie.ui.main.home.store;
+package com.t3h.nitefoodie.ui.main.home.store.list_store;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,6 +17,7 @@ import com.squareup.picasso.Picasso;
 import com.t3h.nitefoodie.R;
 import com.t3h.nitefoodie.common.Constants;
 import com.t3h.nitefoodie.model.Store;
+import com.t3h.nitefoodie.ui.main.home.store.store_detail.StoreDetailActivity;
 
 /**
  * Created by thinhquan on 6/29/17.
@@ -42,6 +43,7 @@ public class StoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         final Store store = mInterf.getPosition(position);
         final StoreViewHolder viewHolder = (StoreViewHolder) holder;
         Picasso.with(mContext).load(store.getPhotoUrl()).into(viewHolder.ivStore);
+        viewHolder.ivStore.setScaleType(ImageView.ScaleType.CENTER_CROP);
         viewHolder.tvStoreName.setText(store.getName());
         viewHolder.tvStoreAddress.setText(store.getAddress());
         viewHolder.ratingBar.setRating((float) store.getRate());

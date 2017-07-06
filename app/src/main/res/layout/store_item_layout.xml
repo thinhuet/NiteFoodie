@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardview"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="2dp"
     android:layout_marginLeft="2dp"
     android:layout_marginRight="2dp"
     android:clickable="true"
-    android:id="@+id/cardview"
     android:foreground="?attr/selectableItemBackground"
     app:cardCornerRadius="2dp"
     app:cardElevation="8dp">
@@ -22,8 +22,8 @@
             android:layout_width="96dp"
             android:layout_height="96dp"
             android:layout_centerVertical="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/gongcha"
+            android:scaleType="centerInside"
+            android:src="@drawable/loading"
             android:transitionName="shareStore" />
 
         <LinearLayout

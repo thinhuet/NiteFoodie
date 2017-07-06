@@ -18,8 +18,7 @@
             android:id="@+id/iv_food"
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/gongcha" />
+            android:src="@drawable/loading" />
 
         <TextView
             android:id="@+id/tv_food_name"
@@ -28,7 +27,8 @@
             android:layout_toRightOf="@+id/iv_food"
             android:paddingLeft="8dp"
             android:text="Tra sua ca phe"
-            android:textColor="@color/black"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
             android:textSize="16sp" />
 
         <TextView
@@ -39,6 +39,7 @@
             android:layout_toRightOf="@+id/iv_food"
             android:paddingLeft="8dp"
             android:text="30.000d"
+            android:textColor="@color/black"
             android:textSize="12sp" />
 
     </RelativeLayout>
