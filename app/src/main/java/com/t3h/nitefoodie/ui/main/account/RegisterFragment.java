@@ -245,7 +245,6 @@ public class RegisterFragment extends BaseMVPFragment implements Constants, View
                 Log.d(TAG, "_______________________________________" + store.getPhotoUrl());
                 //photoUrl = downloadUrl.toString();
                 mData.child(STORES).child(idUser).setValue(store);
-
             }
         });
     }
