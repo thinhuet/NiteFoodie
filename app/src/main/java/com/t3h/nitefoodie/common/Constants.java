@@ -17,4 +17,5 @@ public interface Constants {
     String ORDER_STATE_CONFIRMED = "Confirmed";
     String ORDER_STATE_DELIVERED = "Delivered";
     String FOOD_ORDERS = "foodOrders";
+    String TOTAL_PRICE = "totalPrice";
 }

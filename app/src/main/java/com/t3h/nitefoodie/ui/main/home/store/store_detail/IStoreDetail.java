@@ -22,5 +22,6 @@ public class IStoreDetail {
         void createOrder(Order order);
 
         void onUpdateFoodToOrder(String orderId, FoodOrder foodOrder);
+        void onUpdateTotalPrice(String orderId, long totalPrice);
     }
 }

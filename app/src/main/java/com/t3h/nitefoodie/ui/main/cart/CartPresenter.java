@@ -1,5 +1,9 @@
 package com.t3h.nitefoodie.ui.main.cart;
 
+import android.support.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -29,9 +33,9 @@ public class CartPresenter extends BasePresenter<IOrder.View> implements IOrder.
         mData.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    Order order = dataSnapshot.getValue(Order.class);
-                    if (order.getUserId().equals(userId)) {
-                        mView.onGetOrder(order);
+                Order order = dataSnapshot.getValue(Order.class);
+                if (order.getUserId().equals(userId)) {
+                    mView.onGetOrder(order);
                 }
             }
 
@@ -55,5 +59,20 @@ public class CartPresenter extends BasePresenter<IOrder.View> implements IOrder.
 
             }
         });
+    }
+
+    @Override
+    public void updateOrder(Order order) {
+        mData.child(order.getId()).setValue(order).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()){
+                    mView.finishUpdateOrder();
+                }else {
+                    mView.onOrderError();
+                }
+            }
+        });
+
     }
 }

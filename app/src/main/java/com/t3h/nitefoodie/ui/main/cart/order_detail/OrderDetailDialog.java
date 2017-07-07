@@ -51,8 +51,17 @@ public class OrderDetailDialog extends Dialog implements FoodOrderAdapter.IFoodA
         setEvents();
     }
 
+
+    private void findViewByIds() {
+        rcFood = (RecyclerView) findViewById(R.id.rc_food);
+        tvOrderId = (TextView) findViewById(R.id.tv_order_id);
+        tvStoreName = (TextView) findViewById(R.id.tv_store_name);
+        tvTotalPrice = (TextView) findViewById(R.id.tv_total_price);
+        btnConfirmOrder = (Button) findViewById(R.id.btn_confirm_orer);
+    }
+
     private void setEvents() {
-        findViewById(R.id.btn_confirm_orer).setOnClickListener(this);
+        btnConfirmOrder.setOnClickListener(this);
     }
 
     private void initComponents() {
@@ -76,18 +85,17 @@ public class OrderDetailDialog extends Dialog implements FoodOrderAdapter.IFoodA
 
             }
         });
-//        tvTotalPrice.setText(mOrder.getTotalPrice()+"");
         for (FoodOrder foodOrder : mOrder.getFoodOrders().values()) {
             foodOrderList.add(foodOrder);
             mAdapter.notifyDataSetChanged();
         }
-    }
 
-    private void findViewByIds() {
-        rcFood= (RecyclerView) findViewById(R.id.rc_food);
-        tvOrderId = (TextView) findViewById(R.id.tv_order_id);
-        tvStoreName = (TextView) findViewById(R.id.tv_store_name);
-        tvTotalPrice = (TextView) findViewById(R.id.tv_total_price);
+        tvTotalPrice.setText(mOrder.getTotalPrice() + "");
+        if (mOrder.getState().equals(Constants.ORDER_STATE_WAITING)) {
+            btnConfirmOrder.setVisibility(View.VISIBLE);
+        } else {
+            btnConfirmOrder.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -106,7 +114,7 @@ public class OrderDetailDialog extends Dialog implements FoodOrderAdapter.IFoodA
         dismiss();
     }
 
-    public interface OnClickButton{
+    public interface OnClickButton {
         void onClick();
     }
 }

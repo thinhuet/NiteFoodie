@@ -17,6 +17,7 @@ import com.squareup.picasso.Picasso;
 import com.t3h.nitefoodie.R;
 import com.t3h.nitefoodie.common.Constants;
 import com.t3h.nitefoodie.model.Store;
+import com.t3h.nitefoodie.ui.Utils;
 import com.t3h.nitefoodie.ui.main.home.store.store_detail.StoreDetailActivity;
 
 /**
@@ -26,6 +27,7 @@ import com.t3h.nitefoodie.ui.main.home.store.store_detail.StoreDetailActivity;
 public class StoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private IStoreAdapter mInterf;
     private Context mContext;
+
     public StoreAdapter(IStoreAdapter interf, Context context) {
         mInterf = interf;
         mContext = context;
@@ -48,6 +50,12 @@ public class StoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         viewHolder.tvStoreAddress.setText(store.getAddress());
         viewHolder.ratingBar.setRating((float) store.getRate());
         viewHolder.tvTag.setText(store.getTag());
+
+        if (Utils.isStoreOpen(store.getOpenTime(), store.getCloseTime())) {
+            viewHolder.ivOnlineState.setImageResource(R.drawable.online);
+        } else {
+            viewHolder.ivOnlineState.setImageResource(R.drawable.offline);
+        }
 
         viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

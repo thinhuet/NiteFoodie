@@ -6,6 +6,8 @@ import android.widget.TimePicker;
 
 import com.t3h.nitefoodie.model.TimeStore;
 
+import java.util.Calendar;
+
 /**
  * Created by thinhquan on 6/29/17.
  */
@@ -44,6 +46,19 @@ public class Utils {
             min = timePicker.getCurrentMinute();
         }
         return new TimeStore(hour, min);
+    }
+
+    public static boolean isStoreOpen(int openTime, int closeTime) {
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        int time = hour * 60 + minute;
+
+        if ((time >= openTime && time <= closeTime) || (time <= openTime && time <= closeTime)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

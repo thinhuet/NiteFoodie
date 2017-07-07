@@ -19,6 +19,7 @@ import com.t3h.nitefoodie.model.Food;
 import com.t3h.nitefoodie.model.FoodOrder;
 import com.t3h.nitefoodie.model.Order;
 import com.t3h.nitefoodie.model.Store;
+import com.t3h.nitefoodie.ui.Utils;
 import com.t3h.nitefoodie.ui.base.activity.BaseActivity;
 
 import java.util.ArrayList;
@@ -146,7 +147,9 @@ public class StoreDetailActivity extends BaseActivity implements IStoreDetail.Vi
                 foodOrder.setPhotoUrl(food.getPhotoUrl());
                 foodOrder.setPrice(food.getPrice());
                 foodOrder.setNumberOfFood(numberFood);
+                long totalPrice = order.getTotalPrice() + foodOrder.getPrice() * foodOrder.getNumberOfFood();
                 mPresenter.onUpdateFoodToOrder(order.getId(), foodOrder);
+                mPresenter.onUpdateTotalPrice(order.getId(), totalPrice);
             }
         });
         detailDialog.show();
@@ -169,6 +172,15 @@ public class StoreDetailActivity extends BaseActivity implements IStoreDetail.Vi
         tvNumberRating.setText(store.getNumberRating() + "");
         btnPhone.setText(store.getPhone());
 
+        if (Utils.isStoreOpen(store.getOpenTime(), store.getCloseTime())) {
+            ivOnlineState.setImageResource(R.drawable.online);
+            tvOnlineState.setText("Online");
+            tvOnlineState.setTextColor(getResources().getColor(R.color.colorAccent));
+        } else {
+            ivOnlineState.setImageResource(R.drawable.offline);
+            tvOnlineState.setText("Offline");
+            tvOnlineState.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        }
         HashMap<String, Food> menu = store.getMenu();
         for (Food food : menu.values()) {
             mFoods.add(food);
