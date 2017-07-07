@@ -1,5 +1,7 @@
 package com.t3h.nitefoodie.model;
 
+import android.util.Log;
+
 import java.util.HashMap;
 
 /**
@@ -11,14 +13,14 @@ public class Order {
     private String storeId;
     private String userId;
     private String state;
-    private HashMap<String, FoodOrder> foodOrders;
+    private HashMap<String, FoodOrder> foodOrders = new HashMap<>();
     private long orderTime;
 
     public Order() {
 
     }
 
-    public HashMap<String, FoodOrder> getFoodIds() {
+    public HashMap<String, FoodOrder> getFoodOrders() {
         return foodOrders;
     }
 
@@ -64,5 +66,15 @@ public class Order {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public long getTotalPrice() {
+        long total = 0;
+        for (FoodOrder foodOrder : foodOrders.values()) {
+            total = total + foodOrder.getPrice() * foodOrder.getNumberOfFood();
+            Log.d("______________","________________"+foodOrder.getName());
+        }
+
+        return total;
     }
 }

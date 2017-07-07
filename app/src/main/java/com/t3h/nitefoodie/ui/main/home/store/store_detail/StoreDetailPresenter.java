@@ -45,7 +45,7 @@ public class StoreDetailPresenter extends BasePresenter<IStoreDetail.View> imple
 
     @Override
     public void onUpdateFoodToOrder(String orderId, FoodOrder foodOrder) {
-        mData.child(Constants.ORDERS).child(orderId).child(foodOrder.getFoodId()).setValue(foodOrder);
+        mData.child(Constants.ORDERS).child(orderId).child(Constants.FOOD_ORDERS).child(foodOrder.getFoodId()).setValue(foodOrder);
         mView.onFoodOrderFinish();
     }
 }

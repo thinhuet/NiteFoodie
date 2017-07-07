@@ -13,8 +13,9 @@
         android:background="@color/colorPrimary"
         app:titleTextColor="@color/white"></android.support.v7.widget.Toolbar>
 
-    <RelativeLayout
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/rc_order"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></RelativeLayout>
+        android:layout_height="wrap_content"
+        android:padding="4dp"></android.support.v7.widget.RecyclerView>
 </LinearLayout>

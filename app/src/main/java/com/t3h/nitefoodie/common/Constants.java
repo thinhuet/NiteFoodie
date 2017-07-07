@@ -16,4 +16,5 @@ public interface Constants {
     String ORDER_STATE_WAITING = "Waiting";
     String ORDER_STATE_CONFIRMED = "Confirmed";
     String ORDER_STATE_DELIVERED = "Delivered";
+    String FOOD_ORDERS = "foodOrders";
 }
