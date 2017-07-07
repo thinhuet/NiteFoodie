@@ -48,9 +48,4 @@ public class StoreDetailPresenter extends BasePresenter<IStoreDetail.View> imple
         mData.child(Constants.ORDERS).child(orderId).child(Constants.FOOD_ORDERS).child(foodOrder.getFoodId()).setValue(foodOrder);
         mView.onFoodOrderFinish();
     }
-
-    @Override
-    public void onUpdateTotalPrice(String orderId, long totalPrice) {
-        mData.child(Constants.ORDERS).child(orderId).child(Constants.TOTAL_PRICE).setValue(totalPrice);
-    }
 }

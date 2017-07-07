@@ -130,26 +130,26 @@ public class StoreDetailActivity extends BaseActivity implements IStoreDetail.Vi
         FoodDetailDialog detailDialog = new FoodDetailDialog(this, food, new FoodDetailDialog.OnClickDialog() {
             @Override
             public void onOrderSubmitClick(int numberFood) {
-                if (!mIsFirstBuy) {
-                    order = new Order();
-                    Calendar calendar = Calendar.getInstance();
-                    String orderId = "o" + calendar.getTimeInMillis();
-                    order.setId(orderId);
-                    order.setStoreId(sId);
-                    order.setState(Constants.ORDER_STATE_WAITING);
-                    order.setUserId(userId);
-                    mPresenter.createOrder(order);
-                    mIsFirstBuy = true;
+                if (numberFood > 0) {
+                    if (!mIsFirstBuy) {
+                        order = new Order();
+                        Calendar calendar = Calendar.getInstance();
+                        String orderId = "o" + calendar.getTimeInMillis();
+                        order.setId(orderId);
+                        order.setStoreId(sId);
+                        order.setState(Constants.ORDER_STATE_WAITING);
+                        order.setUserId(userId);
+                        mPresenter.createOrder(order);
+                        mIsFirstBuy = true;
+                    }
+                    FoodOrder foodOrder = new FoodOrder();
+                    foodOrder.setFoodId(food.getFoodId());
+                    foodOrder.setName(food.getName());
+                    foodOrder.setPhotoUrl(food.getPhotoUrl());
+                    foodOrder.setPrice(food.getPrice());
+                    foodOrder.setNumberOfFood(numberFood);
+                    mPresenter.onUpdateFoodToOrder(order.getId(), foodOrder);
                 }
-                FoodOrder foodOrder = new FoodOrder();
-                foodOrder.setFoodId(food.getFoodId());
-                foodOrder.setName(food.getName());
-                foodOrder.setPhotoUrl(food.getPhotoUrl());
-                foodOrder.setPrice(food.getPrice());
-                foodOrder.setNumberOfFood(numberFood);
-                long totalPrice = order.getTotalPrice() + foodOrder.getPrice() * foodOrder.getNumberOfFood();
-                mPresenter.onUpdateFoodToOrder(order.getId(), foodOrder);
-                mPresenter.onUpdateTotalPrice(order.getId(), totalPrice);
             }
         });
         detailDialog.show();

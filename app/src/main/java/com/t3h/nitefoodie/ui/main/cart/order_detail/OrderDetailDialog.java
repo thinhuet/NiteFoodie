@@ -90,7 +90,7 @@ public class OrderDetailDialog extends Dialog implements FoodOrderAdapter.IFoodA
             mAdapter.notifyDataSetChanged();
         }
 
-        tvTotalPrice.setText(mOrder.getTotalPrice() + "");
+        tvTotalPrice.setText(mOrder.getTotalPrice() + "d");
         if (mOrder.getState().equals(Constants.ORDER_STATE_WAITING)) {
             btnConfirmOrder.setVisibility(View.VISIBLE);
         } else {

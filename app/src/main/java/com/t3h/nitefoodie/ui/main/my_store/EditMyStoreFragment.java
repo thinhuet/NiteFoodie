@@ -1,4 +1,4 @@
-package com.t3h.nitefoodie.ui.main.account;
+package com.t3h.nitefoodie.ui.main.my_store;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,7 +11,6 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,28 +23,31 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.t3h.nitefoodie.R;
 import com.t3h.nitefoodie.common.Constants;
+import com.t3h.nitefoodie.model.Food;
 import com.t3h.nitefoodie.model.Store;
 import com.t3h.nitefoodie.ui.Utils;
 import com.t3h.nitefoodie.ui.base.fragment.BaseMVPFragment;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
+import java.util.HashMap;
 
 /**
- * Created by dungtx on 04/07/2017.
+ * Created by thinhquan on 7/8/17.
  */
 
-public class RegisterFragment extends BaseMVPFragment implements Constants, View.OnClickListener, PopupMenu.OnMenuItemClickListener {
-
-    private static final String TAG = RegisterFragment.class.getSimpleName();
+public class EditMyStoreFragment extends BaseMVPFragment implements Constants, View.OnClickListener, PopupMenu.OnMenuItemClickListener {
     private Toolbar toolbar;
     private DatabaseReference mData;
     private ImageView ivStore;
@@ -69,7 +71,8 @@ public class RegisterFragment extends BaseMVPFragment implements Constants, View
     private int closeTime;
     private String tag;
     private String photoUrl;
-    private Store store;
+    private Store mStore;
+    private HashMap<String, Food> menu = new HashMap<>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,13 +104,33 @@ public class RegisterFragment extends BaseMVPFragment implements Constants, View
 
     @Override
     public void initComponents() {
-        store = new Store();
+        mStore = new Store();
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setTitle("My Store");
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         mData = FirebaseDatabase.getInstance().getReference();
         idUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        mData.child(Constants.STORES).child(idUser).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Store store = dataSnapshot.getValue(Store.class);
+                menu = store.getMenu();
+                Picasso.with(getContext()).load(store.getPhotoUrl()).into(ivStore);
+                edtName.setText(store.getName());
+                edtAddress.setText(store.getAddress());
+                edtPhone.setText(store.getPhone());
+                edtType.setText(store.getTag());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
         openTimePicker.setIs24HourView(true);
         closeTimePicker.setIs24HourView(true);
@@ -235,15 +258,16 @@ public class RegisterFragment extends BaseMVPFragment implements Constants, View
 
         openTime = Utils.convertTimeToInt(Utils.getTimeInTimePicker(openTimePicker));
         closeTime = Utils.convertTimeToInt(Utils.getTimeInTimePicker(closeTimePicker));
-        store.setName(name);
-        store.setAddress(address);
-        store.setPhone(phone);
-        store.setTag(tag);
-        store.setOpenTime(openTime);
-        store.setCloseTime(closeTime);
-        store.setRate(0);
-        store.setNumberRating(0);
-        store.setsId(idUser);
+        mStore.setName(name);
+        mStore.setAddress(address);
+        mStore.setPhone(phone);
+        mStore.setTag(tag);
+        mStore.setOpenTime(openTime);
+        mStore.setCloseTime(closeTime);
+        mStore.setRate(0);
+        mStore.setNumberRating(0);
+        mStore.setsId(idUser);
+        mStore.setMenu(menu);
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
@@ -267,11 +291,24 @@ public class RegisterFragment extends BaseMVPFragment implements Constants, View
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
-                store.setPhotoUrl(String.valueOf(taskSnapshot.getDownloadUrl()));
-                Log.d(TAG, "_______________________________________" + taskSnapshot.getDownloadUrl().toString());
-                Log.d(TAG, "_______________________________________" + store.getPhotoUrl());
-                //photoUrl = downloadUrl.toString();
-                mData.child(STORES).child(idUser).setValue(store);
+                mStore.setPhotoUrl(String.valueOf(taskSnapshot.getDownloadUrl()));
+                mData.child(STORES).child(idUser).setValue(mStore);
+            }
+        });
+    }
+
+    public void getStoreInfo() {
+        mData.child(Constants.STORES).child(idUser).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    mStore = dataSnapshot.getValue(Store.class);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
     }

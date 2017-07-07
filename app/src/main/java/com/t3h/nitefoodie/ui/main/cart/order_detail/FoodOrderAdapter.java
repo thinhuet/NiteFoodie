@@ -38,7 +38,7 @@ public class FoodOrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         Context context = viewHolder.ivFood.getContext();
         Picasso.with(context).load(foodOrder.getPhotoUrl()).into(viewHolder.ivFood);
         viewHolder.tvFoodName.setText(foodOrder.getName());
-        viewHolder.tvFoodPrice.setText(foodOrder.getPrice() + "");
+        viewHolder.tvFoodPrice.setText(foodOrder.getPrice() + "d");
         viewHolder.tvNumberFood.setText(foodOrder.getNumberOfFood() + "");
     }
 

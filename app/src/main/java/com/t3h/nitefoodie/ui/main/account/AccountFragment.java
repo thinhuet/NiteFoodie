@@ -34,6 +34,7 @@ import com.t3h.nitefoodie.ui.base.fragment.BaseFragment;
 import com.t3h.nitefoodie.ui.base.fragment.BaseMVPFragment;
 import com.t3h.nitefoodie.ui.main.MainActivity;
 import com.t3h.nitefoodie.ui.main.login.LoginActivity;
+import com.t3h.nitefoodie.ui.main.my_store.MyStoreActivity;
 
 
 public class AccountFragment extends BaseMVPFragment implements View.OnClickListener {
@@ -126,8 +127,15 @@ public class AccountFragment extends BaseMVPFragment implements View.OnClickList
             case R.id.action_account_logout:
                 logOut();
                 break;
+            case R.id.action_account_edit:
+                editAccount();
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void editAccount() {
+
     }
 
     private void logOut() {
@@ -155,19 +163,56 @@ public class AccountFragment extends BaseMVPFragment implements View.OnClickList
 
     @Override
     public void onClick(View v) {
+        mData.child(Constants.STORES).child(idUser).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() == null){
+                    showRegisterFragment();
+                }else {
+                    showMyStoreFragment();
+                }
+            }
 
-        MainActivity activity = (MainActivity)getActivity();
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-        BaseFragment fragment = BaseFragment.getCurrentBaseFragment(activity.getSupportFragmentManager());
-        //Log.d(TAG, fragment.getClass().getName() + "");
-        FragmentManager manager = activity.getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        if (fragment != null) {
-            BaseFragment.hideFragment(manager, transaction, fragment.getClass(),
-                    ScreenAnimation.OPEN_FULL, false, false);
-        }
+            }
+        });
 
-        BaseFragment.openFragment(manager, transaction,
-                RegisterFragment.class, ScreenAnimation.OPEN_FULL, null, true, true);
+
+    }
+
+    private void showMyStoreFragment() {
+        Intent intent = new Intent(getContext(), MyStoreActivity.class);
+        startActivity(intent);
+    }
+
+    private void showRegisterFragment() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage("Bạn chưa có cửa hàng! Bạn có muốn tạo mơi?");
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                MainActivity activity = (MainActivity) getActivity();
+
+                BaseFragment fragment = BaseFragment.getCurrentBaseFragment(activity.getSupportFragmentManager());
+                //Log.d(TAG, fragment.getClass().getName() + "");
+                FragmentManager manager = activity.getSupportFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                if (fragment != null) {
+                    BaseFragment.hideFragment(manager, transaction, fragment.getClass(),
+                            ScreenAnimation.OPEN_FULL, false, false);
+                }
+
+                BaseFragment.openFragment(manager, transaction,
+                        RegisterFragment.class, ScreenAnimation.OPEN_FULL, null, true, true);
+            }
+        });
     }
 }

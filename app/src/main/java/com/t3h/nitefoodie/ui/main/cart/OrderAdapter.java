@@ -54,7 +54,7 @@ public class OrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             }
         });
         viewHolder.tvOrderId.setText(order.getId());
-        viewHolder.tvTotalPrice.setText(order.getTotalPrice() + "");
+        viewHolder.tvTotalPrice.setText(order.getTotalPrice() + "d");
         viewHolder.tvState.setText(order.getState());
     }
 

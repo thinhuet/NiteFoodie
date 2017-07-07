@@ -14,6 +14,7 @@ import com.t3h.nitefoodie.ui.base.fragment.BaseMVPFragment;
 import com.t3h.nitefoodie.ui.main.cart.order_detail.OrderDetailDialog;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -77,8 +78,11 @@ public class CartFragment extends BaseMVPFragment implements IOrder.View, OrderA
         OrderDetailDialog dialog = new OrderDetailDialog(getContext(), order, new OrderDetailDialog.OnClickButton() {
             @Override
             public void onClick() {
+                Calendar calendar = Calendar.getInstance();
                 order.setState(Constants.ORDER_STATE_CONFIRMED);
+                order.setOrderTime(calendar.getTimeInMillis());
                 mPresenter.updateOrder(order);
+                mAdapter.notifyDataSetChanged();
             }
         });
         dialog.show();
@@ -92,13 +96,13 @@ public class CartFragment extends BaseMVPFragment implements IOrder.View, OrderA
 
     @Override
     public void finishUpdateOrder() {
+
         Snackbar.make(getView().findViewById(R.id.content), "Đặt hàng thành công",Snackbar.LENGTH_SHORT)
                 .setAction("OK", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
                     }
-                });
+                }).show();
     }
 
     @Override
