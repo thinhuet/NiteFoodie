@@ -5,10 +5,10 @@ package com.t3h.nitefoodie.model;
  */
 
 public class Food {
-    private String name;
-    private String foodId;
-    private long price;
-    private String photoUrl;
+    protected String name;
+    protected String foodId;
+    protected long price;
+    protected String photoUrl;
 
     public Food() {
 

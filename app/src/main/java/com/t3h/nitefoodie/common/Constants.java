@@ -13,4 +13,7 @@ public interface Constants {
     String ORDERS = "Orders";
     int REQUEST_LOAD_GALLERY = 10;
     int REQUEST_LOAD_CAPTURE = 20;
+    String ORDER_STATE_WAITING = "Waiting";
+    String ORDER_STATE_CONFIRMED = "Confirmed";
+    String ORDER_STATE_DELIVERED = "Delivered";
 }

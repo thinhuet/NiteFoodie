@@ -6,6 +6,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.t3h.nitefoodie.common.Constants;
+import com.t3h.nitefoodie.model.FoodOrder;
+import com.t3h.nitefoodie.model.Order;
 import com.t3h.nitefoodie.model.Store;
 import com.t3h.nitefoodie.ui.base.BasePresenter;
 
@@ -15,23 +17,35 @@ import com.t3h.nitefoodie.ui.base.BasePresenter;
 
 public class StoreDetailPresenter extends BasePresenter<IStoreDetail.View> implements IStoreDetail.Presenter {
     private DatabaseReference mData;
+
     public StoreDetailPresenter(IStoreDetail.View view) {
         super(view);
+        mData = FirebaseDatabase.getInstance().getReference();
     }
 
     @Override
     public void getStoreInfo(String sId) {
-        mData = FirebaseDatabase.getInstance().getReference().child(Constants.STORES).child(sId);
-        mData.addValueEventListener(new ValueEventListener() {
+        mData.child(Constants.STORES).child(sId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                    Store store = dataSnapshot.getValue(Store.class);
-                    mView.finishGetStoreDetail(store);
+                Store store = dataSnapshot.getValue(Store.class);
+                mView.finishGetStoreDetail(store);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+    }
+
+    @Override
+    public void createOrder(Order order) {
+        mData.child(Constants.ORDERS).child(order.getId()).setValue(order);
+    }
+
+    @Override
+    public void onUpdateFoodToOrder(String orderId, FoodOrder foodOrder) {
+        mData.child(Constants.ORDERS).child(orderId).child(foodOrder.getFoodId()).setValue(foodOrder);
+        mView.onFoodOrderFinish();
     }
 }

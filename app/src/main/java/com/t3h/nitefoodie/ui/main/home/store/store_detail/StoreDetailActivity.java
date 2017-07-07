@@ -1,6 +1,7 @@
 package com.t3h.nitefoodie.ui.main.home.store.store_detail;
 
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -9,16 +10,19 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 import com.t3h.nitefoodie.R;
 import com.t3h.nitefoodie.common.Constants;
 import com.t3h.nitefoodie.model.Food;
+import com.t3h.nitefoodie.model.FoodOrder;
+import com.t3h.nitefoodie.model.Order;
 import com.t3h.nitefoodie.model.Store;
 import com.t3h.nitefoodie.ui.base.activity.BaseActivity;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,6 +31,9 @@ import java.util.List;
  */
 
 public class StoreDetailActivity extends BaseActivity implements IStoreDetail.View, View.OnClickListener, FoodAdapter.IRecipeAdapter {
+
+    private static String currentStoreId = "";
+
     private Toolbar toolbar;
     private ImageView ivToolbar;
     private TextView tvAddress;
@@ -42,6 +49,9 @@ public class StoreDetailActivity extends BaseActivity implements IStoreDetail.Vi
     private FoodAdapter mFoodAdapter;
     private StoreDetailPresenter mPresenter;
     private String sId;
+    private String userId;
+    private boolean mIsFirstBuy = false;
+    private Order order;
 
     @Override
     public int getLayoutMain() {
@@ -65,6 +75,7 @@ public class StoreDetailActivity extends BaseActivity implements IStoreDetail.Vi
 
     @Override
     public void initComponents() {
+        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         sId = getIntent().getStringExtra(Constants.ID_USER);
         mPresenter = new StoreDetailPresenter(this);
 
@@ -114,11 +125,28 @@ public class StoreDetailActivity extends BaseActivity implements IStoreDetail.Vi
 
     @Override
     public void onClick(int position) {
-        Food food = mFoods.get(position);
-        final FoodDetailDialog detailDialog = new FoodDetailDialog(this, food, new FoodDetailDialog.OnClickDialog() {
+        final Food food = mFoods.get(position);
+        FoodDetailDialog detailDialog = new FoodDetailDialog(this, food, new FoodDetailDialog.OnClickDialog() {
             @Override
             public void onOrderSubmitClick(int numberFood) {
-                Toast.makeText(StoreDetailActivity.this, "afdagdag" + numberFood, Toast.LENGTH_SHORT).show();
+                if (!mIsFirstBuy) {
+                    order = new Order();
+                    Calendar calendar = Calendar.getInstance();
+                    String orderId = "o" + calendar.getTimeInMillis();
+                    order.setId(orderId);
+                    order.setStoreId(sId);
+                    order.setState(Constants.ORDER_STATE_WAITING);
+                    order.setUserId(userId);
+                    mPresenter.createOrder(order);
+                    mIsFirstBuy = true;
+                }
+                FoodOrder foodOrder = new FoodOrder();
+                foodOrder.setFoodId(food.getFoodId());
+                foodOrder.setName(food.getName());
+                foodOrder.setPhotoUrl(food.getPhotoUrl());
+                foodOrder.setPrice(food.getPrice());
+                foodOrder.setNumberOfFood(numberFood);
+                mPresenter.onUpdateFoodToOrder(order.getId(), foodOrder);
             }
         });
         detailDialog.show();
@@ -146,5 +174,14 @@ public class StoreDetailActivity extends BaseActivity implements IStoreDetail.Vi
             mFoods.add(food);
             mFoodAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onFoodOrderFinish() {
+        Snackbar.make(findViewById(R.id.content), "Đã thêm vào giỏ hàng", Snackbar.LENGTH_LONG).setAction("OK", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        }).show();
     }
 }

@@ -6,8 +6,14 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.t3h.nitefoodie.R;
 import com.t3h.nitefoodie.common.Constants;
+import com.t3h.nitefoodie.model.Order;
 import com.t3h.nitefoodie.ui.base.activity.BaseActivity;
 import com.t3h.nitefoodie.ui.base.animation.ScreenAnimation;
 import com.t3h.nitefoodie.ui.base.fragment.BaseFragment;
@@ -21,6 +27,7 @@ public class MainActivity extends BaseActivity implements AHBottomNavigation.OnT
     private static final String TAG = MainActivity.class.getSimpleName();
     private AHBottomNavigation mBottomNavigation;
     private String idUser;
+    private DatabaseReference mData;
 
     @Override
     public int getLayoutMain() {
@@ -34,6 +41,7 @@ public class MainActivity extends BaseActivity implements AHBottomNavigation.OnT
 
     @Override
     public void initComponents() {
+        mData = FirebaseDatabase.getInstance().getReference();
 
         Intent intent = getIntent();
         idUser = intent.getStringExtra(Constants.ID_USER);
@@ -43,6 +51,41 @@ public class MainActivity extends BaseActivity implements AHBottomNavigation.OnT
         FragmentManager manager = getSupportFragmentManager();
         BaseFragment.openFragment(manager, manager.beginTransaction(),
                 MainFragment.class, ScreenAnimation.OPEN_FULL, null, false, true);
+
+        onListenOrderAdd();
+
+    }
+
+    private void onListenOrderAdd() {
+        mData.child(Constants.ORDERS).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Order order = dataSnapshot.getValue(Order.class);
+                if (order != null) {
+                    mBottomNavigation.setNotification("1", 1);
+                }
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void initBottomNavigation() {
@@ -63,7 +106,7 @@ public class MainActivity extends BaseActivity implements AHBottomNavigation.OnT
         //  mBottonNavigation.setForceTint(true);
         mBottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
         mBottomNavigation.setNotificationBackgroundColor(getResources().getColor(R.color.colorAccent));
-        mBottomNavigation.setNotification("ABC", 1);
+        // mBottomNavigation.setNotification("ABC", 1);
 
         //mBottomNavigation.setColored(true);
 
@@ -91,6 +134,7 @@ public class MainActivity extends BaseActivity implements AHBottomNavigation.OnT
                         MainFragment.class, ScreenAnimation.OPEN_FULL, null, false, true);
                 break;
             case 1:
+                mBottomNavigation.setNotification("",1);
                 BaseFragment.openFragment(manager, transaction,
                         CartFragment.class, ScreenAnimation.OPEN_FULL, null, false, true);
                 break;
