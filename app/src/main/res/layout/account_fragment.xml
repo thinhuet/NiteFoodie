@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:gravity="center_vertical"
-            android:text="0123456789"
+            android:text="_____________"
             android:textColor="@color/black"
             android:textSize="24sp" />
 
@@ -105,7 +105,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:gravity="center_vertical"
-            android:text="Address"
+            android:text="______________"
             android:textColor="@color/black"
             android:textSize="24sp" />
 

@@ -22,5 +22,8 @@ public class IStoreDetail {
         void createOrder(Order order);
 
         void onUpdateFoodToOrder(String orderId, FoodOrder foodOrder);
+
+        void addToFavorite(String sId);
+        void removeFromFavorite(String sId);
     }
 }

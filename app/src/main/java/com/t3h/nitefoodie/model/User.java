@@ -1,5 +1,7 @@
 package com.t3h.nitefoodie.model;
 
+import java.util.HashMap;
+
 /**
  * Created by dungtx on 02/07/2017.
  */
@@ -9,8 +11,34 @@ public class User {
     private String email;
     private String name;
     private String photoUrl;
-
+    private String phone;
+    private String address;
+    private HashMap<String, String> favoriteIds = new HashMap<>();
     public User() {
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public HashMap<String, String> getFavoriteIds() {
+        return favoriteIds;
+    }
+
+    public void setFavoriteIds(HashMap<String, String> favoriteIds) {
+        this.favoriteIds = favoriteIds;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getPhotoUrl() {

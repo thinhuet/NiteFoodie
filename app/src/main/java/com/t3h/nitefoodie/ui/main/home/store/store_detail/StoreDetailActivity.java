@@ -12,6 +12,11 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.t3h.nitefoodie.R;
 import com.t3h.nitefoodie.common.Constants;
@@ -53,6 +58,7 @@ public class StoreDetailActivity extends BaseActivity implements IStoreDetail.Vi
     private String userId;
     private boolean mIsFirstBuy = false;
     private Order order;
+    private DatabaseReference mData;
 
     @Override
     public int getLayoutMain() {
@@ -77,6 +83,7 @@ public class StoreDetailActivity extends BaseActivity implements IStoreDetail.Vi
     @Override
     public void initComponents() {
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        mData = FirebaseDatabase.getInstance().getReference();
         sId = getIntent().getStringExtra(Constants.ID_USER);
         mPresenter = new StoreDetailPresenter(this);
 
@@ -89,6 +96,22 @@ public class StoreDetailActivity extends BaseActivity implements IStoreDetail.Vi
         rcStoreMenu.setNestedScrollingEnabled(false);
 
         mPresenter.getStoreInfo(sId);
+
+
+        mData.child(Constants.USERS).child(userId).child(Constants.FAVORITE_ID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChild(sId)) {
+                    fabFavourite.setImageResource(R.drawable.ic_favorite_white_24dp);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     @Override
@@ -112,7 +135,24 @@ public class StoreDetailActivity extends BaseActivity implements IStoreDetail.Vi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fab_favourite:
-                fabFavourite.setImageResource(R.drawable.ic_favorite_white_24dp);
+                mData.child(Constants.USERS).child(userId).child(Constants.FAVORITE_ID).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.hasChild(sId)) {
+                            fabFavourite.setImageResource(R.drawable.ic_favorite_border_white_24dp);
+                            mPresenter.removeFromFavorite(sId);
+                        }else {
+                            fabFavourite.setImageResource(R.drawable.ic_favorite_white_24dp);
+                            mPresenter.addToFavorite(sId);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+                
                 break;
             case R.id.btn_store_phone:
                 break;

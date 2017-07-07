@@ -45,6 +45,8 @@ public class AccountFragment extends BaseMVPFragment implements View.OnClickList
     private TextView tvUserName;
     private TextView tvUserEmail;
     private Button btnRegister;
+    private TextView tvPhone;
+    private TextView tvAddress;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,6 +66,8 @@ public class AccountFragment extends BaseMVPFragment implements View.OnClickList
         tvUserName = (TextView) getView().findViewById(R.id.tv_user_name);
         tvUserEmail = (TextView) getView().findViewById(R.id.tv_user_email);
         btnRegister = (Button) getView().findViewById(R.id.btn_register);
+        tvPhone = (TextView) getView().findViewById(R.id.tv_user_phone);
+        tvAddress = (TextView) getView().findViewById(R.id.tv_user_address);
     }
 
     @Override
@@ -82,7 +86,7 @@ public class AccountFragment extends BaseMVPFragment implements View.OnClickList
         idUser = firebaseUser.getUid();
         //  idUser = getArguments().getString(Constants.ID_USER);
 
-        mData.child(Constants.USERS).child(idUser).addListenerForSingleValueEvent(new ValueEventListener() {
+        mData.child(Constants.USERS).child(idUser).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() != null) {
@@ -91,6 +95,12 @@ public class AccountFragment extends BaseMVPFragment implements View.OnClickList
                             .into(ivUserAvatar);
                     tvUserName.setText(user.getName());
                     tvUserEmail.setText(user.getEmail());
+                    if (user.getPhone() != null) {
+                        tvPhone.setText(user.getPhone());
+                    }
+                    if (user.getAddress() != null) {
+                        tvAddress.setText(user.getAddress());
+                    }
                 }
             }
 
@@ -135,7 +145,8 @@ public class AccountFragment extends BaseMVPFragment implements View.OnClickList
     }
 
     private void editAccount() {
-
+        EditAccountDialog dialog = new EditAccountDialog(getContext());
+        dialog.show();
     }
 
     private void logOut() {
@@ -166,9 +177,9 @@ public class AccountFragment extends BaseMVPFragment implements View.OnClickList
         mData.child(Constants.STORES).child(idUser).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() == null){
+                if (dataSnapshot.getValue() == null) {
                     showRegisterFragment();
-                }else {
+                } else {
                     showMyStoreFragment();
                 }
             }

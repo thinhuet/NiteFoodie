@@ -23,4 +23,5 @@ public interface Constants {
     String FOOD_NAME = "foodName";
     String FOOD_PRICE = "foodPrice";
     String FOOD_URL = "foodUrl";
+    String FAVORITE_ID = "favoriteIds";
 }

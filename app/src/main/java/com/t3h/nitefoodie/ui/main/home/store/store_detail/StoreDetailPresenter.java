@@ -1,5 +1,6 @@
 package com.t3h.nitefoodie.ui.main.home.store.store_detail;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -17,9 +18,11 @@ import com.t3h.nitefoodie.ui.base.BasePresenter;
 
 public class StoreDetailPresenter extends BasePresenter<IStoreDetail.View> implements IStoreDetail.Presenter {
     private DatabaseReference mData;
+    private String userId;
 
     public StoreDetailPresenter(IStoreDetail.View view) {
         super(view);
+        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         mData = FirebaseDatabase.getInstance().getReference();
     }
 
@@ -47,5 +50,15 @@ public class StoreDetailPresenter extends BasePresenter<IStoreDetail.View> imple
     public void onUpdateFoodToOrder(String orderId, FoodOrder foodOrder) {
         mData.child(Constants.ORDERS).child(orderId).child(Constants.FOOD_ORDERS).child(foodOrder.getFoodId()).setValue(foodOrder);
         mView.onFoodOrderFinish();
+    }
+
+    @Override
+    public void addToFavorite(String sId) {
+        mData.child(Constants.USERS).child(userId).child(Constants.FAVORITE_ID).child(sId).setValue(sId);
+    }
+
+    @Override
+    public void removeFromFavorite(String sId) {
+        mData.child(Constants.USERS).child(userId).child(Constants.FAVORITE_ID).child(sId).removeValue();
     }
 }

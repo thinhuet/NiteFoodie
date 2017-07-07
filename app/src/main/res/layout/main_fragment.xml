@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/content"
     android:background="@color/white">
 
     <android.support.v4.view.ViewPager
@@ -24,19 +25,16 @@
             android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|enterAlways">
 
-            <com.arlib.floatingsearchview.FloatingSearchView
-                android:id="@+id/search_view"
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                style="@style/Toolbar.TitleText"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:floatingSearch_actionMenuOverflowColor="@color/colorPrimary"
-                app:floatingSearch_close_search_on_keyboard_dismiss="true"
-                app:floatingSearch_dimBackground="true"
-                app:floatingSearch_dismissOnOutsideTouch="true"
-                app:floatingSearch_leftActionMode="showSearch"
-                app:floatingSearch_menu="@menu/menu_search_view"
-                app:floatingSearch_searchHint="Search..."
+                android:background="@color/colorPrimary"
                 app:layout_collapseMode="parallax"
-                app:theme="@style/AppTheme.SearchViewStyle"></com.arlib.floatingsearchview.FloatingSearchView>
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:titleTextAppearance="@style/Toolbar.TitleText"></android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
